@@ -1,0 +1,24 @@
+/*
+ * Drop your font files into src/assets/fonts/ and update the URLs below
+ * if your filenames differ. Variable fonts work best as .woff2 or .ttf.
+ *
+ * Expected files:
+ *   - RotorOverlay-VF.woff2  (variable; body + wordmark)
+ *   - Monstera.woff2         (SO logo)
+ */
+
+@font-face {
+  font-family: 'Rotor Overlay';
+  src: url('../assets/fonts/rotor-Variable_overlay.ttf') ;
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Monstera';
+  src: url('../assets/fonts/Monstera-Bold.ttf') ;
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}

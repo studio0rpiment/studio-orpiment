@@ -1,0 +1,8 @@
+.wordmark {
+  font-family: 'Rotor Overlay', ui-monospace, monospace;
+  font-size: clamp(2rem, 4vw, 5rem);
+  font-weight: 100;
+  color: var(--color-ink);
+  line-height: 1;
+  white-space: nowrap;
+}

@@ -1,0 +1,10 @@
+.block {
+  background: var(--color-ink);
+  /* Dark fill shows through the canvas wherever the 3D scene is transparent
+     (around the sphere), giving the dark colour as the in-window background. */
+  z-index: 1;
+  /* Position is set by the parent grid via a placement class
+     (e.g. `block--left-portrait`). The shared <ViewportCanvas> clips its
+     render to the union of every block's DOM rect, so this div doubles as
+     both a rectangle on the page and a window into the shared 3D world. */
+}

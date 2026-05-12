@@ -1,0 +1,25 @@
+.description {
+  font-family: 'Rotor Overlay', ui-monospace, monospace;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.4;
+  color: var(--color-ink);
+  margin: 0;
+  text-align: right;
+}
+
+.description__highlight {
+  /* Block-level so each highlight forces line breaks before and after itself —
+     the non-highlighted words between highlights end up on their own lines. */
+  display: block;
+  width: fit-content;
+  margin-left: auto;             /* right-align (text-align doesn't reach blocks) */
+  color: var(--color-orpiment);
+  background-color: var(--color-ink);
+  padding: 0.1em 0.35em;
+  /* Keep the phrase as one unbroken unit. */
+  white-space: nowrap;
+  /* Fallback if a phrase ever wraps on very narrow viewports. */
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+}
