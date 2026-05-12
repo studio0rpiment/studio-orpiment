@@ -63,7 +63,11 @@ export default function ViewportCanvas() {
         left: 0,
         width: '100%',
         height: '100%',
-        pointerEvents: 'none',
+        // No `pointer-events: none` here — we want clicks inside the block
+        // regions to reach the 3D content (e.g. clickable sphere). The
+        // `clip-path` already makes the regions BETWEEN blocks non-
+        // interactive at the pixel level, so clicks there still pass
+        // through to the page.
         zIndex: 50,
         clipPath,
         WebkitClipPath: clipPath,

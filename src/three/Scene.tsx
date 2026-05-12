@@ -1,12 +1,13 @@
-import Sphere from './Sphere'
 import Lights from './Lights'
+import Sphere from './Sphere'
 
 /**
  * Scene — the shared 3D content rendered through each Block's viewport.
  *
- * Kept as a single composable unit so any block can opt into showing it
- * (or pass different content as children to <Block>). To add more objects,
- * extend this file; every viewport picks the change up automatically.
+ * Currently shows a single clickable sphere drifting through one shared
+ * world. CattailMorph (the 4-stage point cloud morph) is staged in
+ * `./CattailMorph.tsx` for when we wire up project-specific scenes per
+ * block — just swap <Sphere /> for <CattailMorph /> to try it.
  */
 export default function Scene() {
   return (
