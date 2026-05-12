@@ -14,7 +14,7 @@ import type { Mesh } from 'three'
  * <Canvas> to have pointer events enabled (i.e. NOT `pointer-events: none`)
  * so the canvas can receive the pointer event in the first place.
  */
-const JUMP_DURATION = 0.7  // seconds — full up-and-down
+const JUMP_DURATION = 1.7  // seconds — full up-and-down
 const JUMP_HEIGHT = 1.5    // world units at the peak
 
 export default function Sphere() {
