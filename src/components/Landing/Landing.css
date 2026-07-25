@@ -18,19 +18,43 @@
   padding: clamp(1.5rem, 3vw, 3rem);
   background: var(--color-bg);
 
+  /* ─── Layout state variables ──────────────────────────────────────────
+   * Row tracks (vh-based) are tweakable for future morph-style sections.
+   * Per-block translate offsets (x/y) let each block slide over the static
+   * rule grid like a paper cutout — its grid placement (and thus its
+   * size) doesn't change, only its position. React sets these variables
+   * inline on .landing to switch sections.
+   * ───────────────────────────────────────────────────────────────────── */
+  --row-stage: 60vh;
+  --row-mid-1: 9vh;
+  --row-mid-2: 9vh;
+  --row-low:   6vh;
+
+  /* Per-block translation offsets — zero = grid-determined home position. */
+  --lp-x: 0px; --lp-y: 0px;   /* left portrait  (dark, 3D viewport) */
+  --rp-x: 0px; --rp-y: 0px;   /* right portrait (dark, 3D viewport) */
+  --ll-x: 0px; --ll-y: 0px;   /* lower-left     (dark, 3D viewport) */
+  --lr-x: 0px; --lr-y: 0px;   /* lower-right    (dark, 3D viewport) */
+  --c1-x: 0px; --c1-y: 0px;   /* cell — bottom-1, defined by the line grid */
+  --c2-x: 0px; --c2-y: 0px;   /* cell — bottom-2 */
+  --c3-x: 0px; --c3-y: 0px;   /* cell — bottom-3 */
+
   grid-template-columns: repeat(24, 1fr);
 
   grid-template-rows:
-    [head-start]    minmax(0, 3rem)   /* capped — logo overflows, doesn't push */
+    [head-start]    minmax(0, 3rem)
     [head-end]      clamp(2rem, 4vh, 4rem)
-    [stage-start]   minmax(0, 6fr)
-    [rule-1]        minmax(0, 0.9fr)  /* 10% smaller than 1fr */
-    [rule-2]        minmax(0, 0.9fr)  /* 10% smaller than 1fr */
-    [rule-3]        minmax(0, 0.6fr)
+    [stage-start]   var(--row-stage)
+    [rule-1]        var(--row-mid-1)
+    [rule-2]        var(--row-mid-2)
+    [rule-3]        var(--row-low)
     [stage-end];
 
   column-gap: 0;
   row-gap: 0;
+
+  /* Animate row track changes when the layout variables flip. */
+  transition: grid-template-rows 0.8s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 /* ── Header row (logo, orpiment bar, wordmark) ────────────────────────── */
@@ -118,35 +142,104 @@
 
 /* ── Blocks ───────────────────────────────────────────────────────────── */
 
+/* Each block keeps its grid placement (and thus its size) AND adds a
+   transform: translate(...) using its own pair of CSS variables. That lets
+   sections move the blocks around like paper cutouts while leaving the
+   underlying rule grid untouched. The transition runs on transform only. */
+
 .block--left-portrait {
   grid-column: 3 / 9;
   grid-row: stage-start / rule-1;
+  transform: translate(var(--lp-x), var(--lp-y));
+  transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .block--right-portrait {
   grid-column: 14 / 20;
   grid-row: stage-start / rule-2;
+  transform: translate(var(--rp-x), var(--rp-y));
+  transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .block--lower-left {
   grid-column: 4 / 12;
   grid-row: rule-1 / rule-2;
-  /* Shifted down by half its row-track height so rule-2 bisects it.
-     Using `position: relative; top: 50%` instead of `transform` because
-     transform creates a fixed-positioning containing block, which would
-     break `background-attachment: fixed` on the stripe pattern. */
+  /* The existing `top: 50%` shift puts rule-2 through the block's middle;
+     translate adds on top of that for section-driven movement. */
   position: relative;
   top: 50%;
-  /* Paint above outline lines so they hide where they cross. */
-  z-index: 3;
+  transform: translate(var(--ll-x), var(--ll-y));
+  transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 3;  /* paint above outline lines so they hide where they cross */
 }
 
 .block--lower-right {
   grid-column: 10 / 19;
   grid-row: rule-2 / rule-3;
-  /* See lower-left for why position: relative instead of transform. */
   position: relative;
   top: 50%;
-  /* Paint above outline lines so they hide where they cross. */
+  transform: translate(var(--lr-x), var(--lr-y));
+  transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
   z-index: 3;
+}
+
+/* ── Cells — rectangles defined by the line grid ──────────────────────
+   The existing horizontal + vertical rules cut the page into rectangles.
+   These are those rectangles, expressed as movable elements. Each one is
+   transparent with a thin dark border that matches the existing line
+   style. At home position the borders overlay the underlying rules (1px
+   on top of 1px → reads as a single line); when translated, each cell
+   carries its borders with it like a paper piece. */
+
+.cell {
+  background: transparent;
+  border: 1px solid var(--color-ink);
+  opacity: 0.85;                    /* same opacity as the rule lines */
+  z-index: 60;                      /* above the 3D canvas (z 50) */
+  transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+  pointer-events: none;             /* don't intercept clicks on the page */
+}
+
+/* Three "bottom-strip" cells — defined by rule-3, stage-end (bottom edge),
+   and the four vertical outline lines. They sit between rule-3 and the
+   bottom of the stage. */
+.cell--bottom-1 {
+  grid-column: 3 / 9;               /* between lp-left and lp-right */
+  grid-row: rule-3 / stage-end;
+  transform: translate(var(--c1-x), var(--c1-y));
+}
+
+.cell--bottom-2 {
+  grid-column: 9 / 14;              /* between lp-right and rp-left */
+  grid-row: rule-3 / stage-end;
+  transform: translate(var(--c2-x), var(--c2-y));
+}
+
+.cell--bottom-3 {
+  grid-column: 14 / 20;             /* between rp-left and rp-right */
+  grid-row: rule-3 / stage-end;
+  transform: translate(var(--c3-x), var(--c3-y));
+}
+
+/* ── Temporary section toggle button ──────────────────────────────────
+   Remove once a real scroll/interaction triggers the layout change. */
+
+.landing__section-toggle {
+  position: fixed;
+  bottom: 1.5rem;
+  right: 1.5rem;
+  z-index: 200;
+  padding: 0.5rem 0.9rem;
+  border: 1px solid var(--color-ink);
+  border-radius: 2px;
+  background: var(--color-bg);
+  color: var(--color-ink);
+  font-family: 'Rotor Overlay', ui-monospace, monospace;
+  font-size: 0.875rem;
+  cursor: pointer;
+}
+
+.landing__section-toggle:hover {
+  background: var(--color-ink);
+  color: var(--color-orpiment);
 }
