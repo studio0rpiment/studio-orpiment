@@ -1,73 +1,21 @@
-/* ─────────────────────────────────────────────────────────────────────────
- * Landing — composition + DOM frame for the 3D cuboid layer.
- * 24-col grid, named row lines. Type + rule lines are flat DOM. Blocks and cells
- * are transparent placeholders whose grid placement is set INLINE per layout
- * (see Landing.tsx). The right control strip cycles the layout.
- * ───────────────────────────────────────────────────────────────────────── */
-
-.landing {
-  position: relative;
-  display: grid;
-  width: 100%;
-  min-height: 100vh;
-  padding: clamp(1.5rem, 3vw, 3rem);
-  background: var(--color-bg);
+.landing { position: relative; display: grid; width: 100%; min-height: 100vh; padding: clamp(1.5rem, 3vw, 3rem); background: var(--color-bg);
   grid-template-columns: repeat(24, 1fr);
-  grid-template-rows:
-    [head-start]  minmax(0, 3rem)
-    [head-end]    clamp(2rem, 4vh, 4rem)
-    [stage-start] 60vh
-    [rule-1]      9vh
-    [rule-2]      9vh
-    [rule-3]      6vh
-    [stage-end];
-  column-gap: 0;
-  row-gap: 0;
-}
-
-/* ── Header (type is non-interactive so clicks reach the pieces below) ─────── */
+  grid-template-rows: [head-start] minmax(0, 3rem) [head-end] clamp(2rem, 4vh, 4rem) [stage-start] 60vh [rule-1] 9vh [rule-2] 9vh [rule-3] 6vh [stage-end];
+  column-gap: 0; row-gap: 0; }
 .landing__logo { grid-column: 1 / 4; grid-row: head-start; align-self: start; justify-self: start; z-index: 100; margin-top: -3rem; pointer-events: none; }
 .landing__bar { grid-column: 5 / 7; grid-row: head-start / head-end; align-self: center; height: clamp(0.7rem, 1.4vw, 1.4rem); background: var(--color-orpiment); display: none; }
 .landing__wordmark { grid-column: 7 / 25; grid-row: head-start / stage-start; align-self: end; justify-self: end; z-index: 100; pointer-events: none; }
 .landing__description { grid-column: 21 / 25; grid-row: stage-start; align-self: start; justify-self: end; padding-top: 0.5rem; z-index: 100; pointer-events: none; }
-
-/* ── Rules ────────────────────────────────────────────────────────────────── */
+/* Chocolate void — behind the cuboids (canvas z50), above the paper page bg. */
+.landing__void { grid-column: 1 / 20; grid-row: stage-start / stage-end; background: var(--color-ink); z-index: 1; pointer-events: none; }
 .landing__rule { grid-column: 1 / -1; height: 1px; background: var(--color-ink); align-self: start; pointer-events: none; opacity: 0.85; z-index: 0; }
-.landing__rule--1 { grid-row-start: rule-1; }
-.landing__rule--2 { grid-row-start: rule-2; }
-.landing__rule--3 { grid-row-start: rule-3; }
+.landing__rule--1 { grid-row-start: rule-1; } .landing__rule--2 { grid-row-start: rule-2; } .landing__rule--3 { grid-row-start: rule-3; }
 .landing__rule--top { grid-row-start: head-end; align-self: end; }
-
 .landing__vrule { grid-row: stage-start / stage-end; width: 1px; background: var(--color-ink); justify-self: start; pointer-events: none; opacity: 0.85; z-index: 2; }
-.landing__vrule--lp-left  { grid-column: 3 / 4;   }
-.landing__vrule--lp-right { grid-column: 9 / 10;  }
-.landing__vrule--rp-left  { grid-column: 14 / 15; }
-.landing__vrule--rp-right { grid-column: 20 / 21; }
-
-/* ── Pieces — transparent placeholders + click hit-targets (placement inline) ─ */
+.landing__vrule--lp-left { grid-column: 3 / 4; } .landing__vrule--lp-right { grid-column: 9 / 10; }
+.landing__vrule--rp-left { grid-column: 14 / 15; } .landing__vrule--rp-right { grid-column: 20 / 21; }
 .block { background: transparent; z-index: 3; pointer-events: auto; cursor: pointer; }
-.cell  { background: transparent; border: none; z-index: 2; pointer-events: auto; cursor: pointer; }
-
-/* ── Right control strip — the open-lined side; cycles the layout ──────────── */
-.landing__control {
-  grid-column: 20 / 25;
-  grid-row: stage-start / stage-end;
-  z-index: 60;
-  pointer-events: auto;
-  cursor: pointer;
-  background: transparent;
-  border: none;
-  padding: 0;
-  display: flex;
-  align-items: flex-end;
-  justify-content: flex-end;
-}
-.landing__control-label {
-  font-family: var(--font-body), ui-monospace, monospace;
-  font-size: 0.8rem;
-  letter-spacing: 0.02em;
-  color: var(--color-ink);
-  opacity: 0.55;
-  padding: 0.5rem 0.2rem;
-}
+.cell { background: transparent; border: none; z-index: 2; pointer-events: auto; cursor: pointer; }
+.landing__control { grid-column: 20 / 25; grid-row: stage-start / stage-end; z-index: 60; pointer-events: auto; cursor: pointer; background: transparent; border: none; padding: 0; display: flex; align-items: flex-end; justify-content: flex-end; }
+.landing__control-label { font-family: var(--font-body), ui-monospace, monospace; font-size: 0.8rem; letter-spacing: 0.02em; color: var(--color-ink); opacity: 0.55; padding: 0.5rem 0.2rem; }
 .landing__control:hover .landing__control-label { opacity: 1; color: var(--color-orpiment); background: var(--color-ink); }

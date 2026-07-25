@@ -1,12 +1,9 @@
 /* Studio Orpiment — design tokens */
 :root {
-  /* Color */
-  --color-bg:        #F5F4ED ;
+  --color-bg:        #F5F4ED;  /* paper (page background) */
   --color-block:     #D9D9D9;
   --color-orpiment:  #EEBD34;
-  --color-ink:       #2B1810;
-
-  /* Type */
+  --color-ink:       #2B1810;  /* chocolate — also the void behind the moving cuboids */
   --font-display:    'Monstera', 'Rotor Overlay', ui-monospace, monospace;
   --font-body:       'Rotor Overlay', ui-monospace, monospace;
 }
