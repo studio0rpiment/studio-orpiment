@@ -1,245 +1,73 @@
 /* ─────────────────────────────────────────────────────────────────────────
- * Landing — front-page composition
- *
- * Single 24-column Grid handles header AND composition. Named row lines
- * (rule-1, rule-2, rule-3) are the alignment anchors that blocks and rule
- * elements both reference, so they share edges by definition.
- *
- * Tuning:
- *   • Horizontal placement: edit `grid-column: <start> / <end>` per element
- *   • Vertical proportions: edit the `fr` ratios in grid-template-rows
- *   • Bar thickness:        edit .landing__bar { height: ... }
+ * Landing — composition + DOM frame for the 3D cuboid layer.
+ * 24-col grid, named row lines. Type + rule lines are flat DOM. Blocks and cells
+ * are transparent placeholders whose grid placement is set INLINE per layout
+ * (see Landing.tsx). The right control strip cycles the layout.
  * ───────────────────────────────────────────────────────────────────────── */
 
 .landing {
+  position: relative;
   display: grid;
   width: 100%;
   min-height: 100vh;
   padding: clamp(1.5rem, 3vw, 3rem);
   background: var(--color-bg);
-
-  /* ─── Layout state variables ──────────────────────────────────────────
-   * Row tracks (vh-based) are tweakable for future morph-style sections.
-   * Per-block translate offsets (x/y) let each block slide over the static
-   * rule grid like a paper cutout — its grid placement (and thus its
-   * size) doesn't change, only its position. React sets these variables
-   * inline on .landing to switch sections.
-   * ───────────────────────────────────────────────────────────────────── */
-  --row-stage: 60vh;
-  --row-mid-1: 9vh;
-  --row-mid-2: 9vh;
-  --row-low:   6vh;
-
-  /* Per-block translation offsets — zero = grid-determined home position. */
-  --lp-x: 0px; --lp-y: 0px;   /* left portrait  (dark, 3D viewport) */
-  --rp-x: 0px; --rp-y: 0px;   /* right portrait (dark, 3D viewport) */
-  --ll-x: 0px; --ll-y: 0px;   /* lower-left     (dark, 3D viewport) */
-  --lr-x: 0px; --lr-y: 0px;   /* lower-right    (dark, 3D viewport) */
-  --c1-x: 0px; --c1-y: 0px;   /* cell — bottom-1, defined by the line grid */
-  --c2-x: 0px; --c2-y: 0px;   /* cell — bottom-2 */
-  --c3-x: 0px; --c3-y: 0px;   /* cell — bottom-3 */
-
   grid-template-columns: repeat(24, 1fr);
-
   grid-template-rows:
-    [head-start]    minmax(0, 3rem)
-    [head-end]      clamp(2rem, 4vh, 4rem)
-    [stage-start]   var(--row-stage)
-    [rule-1]        var(--row-mid-1)
-    [rule-2]        var(--row-mid-2)
-    [rule-3]        var(--row-low)
+    [head-start]  minmax(0, 3rem)
+    [head-end]    clamp(2rem, 4vh, 4rem)
+    [stage-start] 60vh
+    [rule-1]      9vh
+    [rule-2]      9vh
+    [rule-3]      6vh
     [stage-end];
-
   column-gap: 0;
   row-gap: 0;
-
-  /* Animate row track changes when the layout variables flip. */
-  transition: grid-template-rows 0.8s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* ── Header row (logo, orpiment bar, wordmark) ────────────────────────── */
+/* ── Header (type is non-interactive so clicks reach the pieces below) ─────── */
+.landing__logo { grid-column: 1 / 4; grid-row: head-start; align-self: start; justify-self: start; z-index: 100; margin-top: -3rem; pointer-events: none; }
+.landing__bar { grid-column: 5 / 7; grid-row: head-start / head-end; align-self: center; height: clamp(0.7rem, 1.4vw, 1.4rem); background: var(--color-orpiment); display: none; }
+.landing__wordmark { grid-column: 7 / 25; grid-row: head-start / stage-start; align-self: end; justify-self: end; z-index: 100; pointer-events: none; }
+.landing__description { grid-column: 21 / 25; grid-row: stage-start; align-self: start; justify-self: end; padding-top: 0.5rem; z-index: 100; pointer-events: none; }
 
-.landing__logo {
-  grid-column: 1 / 4;             /* left edge flush with the rules' left end */
-  grid-row: head-start;           /* same row as the wordmark */
-  align-self: start;              /* top of logo at top of head-start row */
-  justify-self: start;            /* hug the left of its column span */
-  z-index: 100;                   /* break the grid: paint on top of everything including the 3D canvas */
-  /* Compensate for Monstera's internal line-box top-padding so the visible
-     glyph top — not the line-box top — aligns with the wordmark's glyph top.
-     Tune ±0.5rem to dial in. */
-  margin-top: -3rem;
-}
-
-.landing__bar {
-  grid-column: 5 / 7;             /* slide the orpiment bar — edit these */
-  grid-row: head-start / head-end;
-  align-self: center;
-  height: clamp(0.7rem, 1.4vw, 1.4rem);
-  background: var(--color-orpiment);
-  display: none;                  /* hidden for now — toggle to show */
-}
-
-.landing__wordmark {
-  grid-column: 7 / 25;            /* slide the wordmark text — edit these */
-  grid-row: head-start / stage-start;  /* span both head rows so it can sit at the bottom */
-  align-self: end;                /* anchor to bottom — just above the top rule */
-  justify-self: end;              /* hug the right edge of the column span */
-}
-
-.landing__description {
-  grid-column: 21 / 25;           /* tucked right of the portrait — slide left/right by editing */
-  grid-row: stage-start;          /* just below the top rule */
-  align-self: start;              /* anchor to top of stage area */
-  justify-self: end;              /* right-align under the wordmark */
-  padding-top: 0.5rem;            /* a touch of breathing room from the orpiment rule */
-  z-index: 100;                   /* paint above the 3D canvas (z 50) like the SO logo */
-}
-
-/* ── Horizontal rules — sit ON the named row lines ────────────────────── */
-
-.landing__rule {
-  grid-column: 1 / -1;
-  height: 1px;
-  background: var(--color-ink);
-  align-self: start;              /* pin to the start of its row track */
-  pointer-events: none;
-  opacity: 0.85;
-  z-index: 0;                     /* sit beneath blocks */
-}
-
+/* ── Rules ────────────────────────────────────────────────────────────────── */
+.landing__rule { grid-column: 1 / -1; height: 1px; background: var(--color-ink); align-self: start; pointer-events: none; opacity: 0.85; z-index: 0; }
 .landing__rule--1 { grid-row-start: rule-1; }
 .landing__rule--2 { grid-row-start: rule-2; }
 .landing__rule--3 { grid-row-start: rule-3; }
+.landing__rule--top { grid-row-start: head-end; align-self: end; }
 
-/* Top rule — placed in the head-end row track, pinned to its end so it
-   sits at the stage-start line (one pixel above the portrait blocks). */
-.landing__rule--top {
-  grid-row-start: head-end;
-  align-self: end;
-}
+.landing__vrule { grid-row: stage-start / stage-end; width: 1px; background: var(--color-ink); justify-self: start; pointer-events: none; opacity: 0.85; z-index: 2; }
+.landing__vrule--lp-left  { grid-column: 3 / 4;   }
+.landing__vrule--lp-right { grid-column: 9 / 10;  }
+.landing__vrule--rp-left  { grid-column: 14 / 15; }
+.landing__vrule--rp-right { grid-column: 20 / 21; }
 
-/* ── Vertical drop line ───────────────────────────────────────────────── */
+/* ── Pieces — transparent placeholders + click hit-targets (placement inline) ─ */
+.block { background: transparent; z-index: 3; pointer-events: auto; cursor: pointer; }
+.cell  { background: transparent; border: none; z-index: 2; pointer-events: auto; cursor: pointer; }
 
-/* Vertical outline lines — trace the left/right edges of both portrait
-   blocks, full stage height. Each sits on a column line shared with a
-   portrait block edge, so alignment is structural. */
-.landing__vrule {
+/* ── Right control strip — the open-lined side; cycles the layout ──────────── */
+.landing__control {
+  grid-column: 20 / 25;
   grid-row: stage-start / stage-end;
-  width: 1px;
-  background: var(--color-ink);
-  justify-self: start;
-  pointer-events: none;
-  opacity: 0.85;
-  z-index: 2;                     /* above portrait blocks, below lower blocks */
-}
-
-.landing__vrule--lp-left  { grid-column: 3 / 4;   }  /* left portrait — left edge  */
-.landing__vrule--lp-right { grid-column: 9 / 10;  }  /* left portrait — right edge */
-.landing__vrule--rp-left  { grid-column: 14 / 15; }  /* right portrait — left edge */
-.landing__vrule--rp-right { grid-column: 20 / 21; }  /* right portrait — right edge*/
-
-
-/* ── Blocks ───────────────────────────────────────────────────────────── */
-
-/* Each block keeps its grid placement (and thus its size) AND adds a
-   transform: translate(...) using its own pair of CSS variables. That lets
-   sections move the blocks around like paper cutouts while leaving the
-   underlying rule grid untouched. The transition runs on transform only. */
-
-.block--left-portrait {
-  grid-column: 3 / 9;
-  grid-row: stage-start / rule-1;
-  transform: translate(var(--lp-x), var(--lp-y));
-  transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.block--right-portrait {
-  grid-column: 14 / 20;
-  grid-row: stage-start / rule-2;
-  transform: translate(var(--rp-x), var(--rp-y));
-  transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.block--lower-left {
-  grid-column: 4 / 12;
-  grid-row: rule-1 / rule-2;
-  /* The existing `top: 50%` shift puts rule-2 through the block's middle;
-     translate adds on top of that for section-driven movement. */
-  position: relative;
-  top: 50%;
-  transform: translate(var(--ll-x), var(--ll-y));
-  transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
-  z-index: 3;  /* paint above outline lines so they hide where they cross */
-}
-
-.block--lower-right {
-  grid-column: 10 / 19;
-  grid-row: rule-2 / rule-3;
-  position: relative;
-  top: 50%;
-  transform: translate(var(--lr-x), var(--lr-y));
-  transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
-  z-index: 3;
-}
-
-/* ── Cells — rectangles defined by the line grid ──────────────────────
-   The existing horizontal + vertical rules cut the page into rectangles.
-   These are those rectangles, expressed as movable elements. Each one is
-   transparent with a thin dark border that matches the existing line
-   style. At home position the borders overlay the underlying rules (1px
-   on top of 1px → reads as a single line); when translated, each cell
-   carries its borders with it like a paper piece. */
-
-.cell {
-  background: transparent;
-  border: 1px solid var(--color-ink);
-  opacity: 0.85;                    /* same opacity as the rule lines */
-  z-index: 60;                      /* above the 3D canvas (z 50) */
-  transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
-  pointer-events: none;             /* don't intercept clicks on the page */
-}
-
-/* Three "bottom-strip" cells — defined by rule-3, stage-end (bottom edge),
-   and the four vertical outline lines. They sit between rule-3 and the
-   bottom of the stage. */
-.cell--bottom-1 {
-  grid-column: 3 / 9;               /* between lp-left and lp-right */
-  grid-row: rule-3 / stage-end;
-  transform: translate(var(--c1-x), var(--c1-y));
-}
-
-.cell--bottom-2 {
-  grid-column: 9 / 14;              /* between lp-right and rp-left */
-  grid-row: rule-3 / stage-end;
-  transform: translate(var(--c2-x), var(--c2-y));
-}
-
-.cell--bottom-3 {
-  grid-column: 14 / 20;             /* between rp-left and rp-right */
-  grid-row: rule-3 / stage-end;
-  transform: translate(var(--c3-x), var(--c3-y));
-}
-
-/* ── Temporary section toggle button ──────────────────────────────────
-   Remove once a real scroll/interaction triggers the layout change. */
-
-.landing__section-toggle {
-  position: fixed;
-  bottom: 1.5rem;
-  right: 1.5rem;
-  z-index: 200;
-  padding: 0.5rem 0.9rem;
-  border: 1px solid var(--color-ink);
-  border-radius: 2px;
-  background: var(--color-bg);
-  color: var(--color-ink);
-  font-family: 'Rotor Overlay', ui-monospace, monospace;
-  font-size: 0.875rem;
+  z-index: 60;
+  pointer-events: auto;
   cursor: pointer;
+  background: transparent;
+  border: none;
+  padding: 0;
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-end;
 }
-
-.landing__section-toggle:hover {
-  background: var(--color-ink);
-  color: var(--color-orpiment);
+.landing__control-label {
+  font-family: var(--font-body), ui-monospace, monospace;
+  font-size: 0.8rem;
+  letter-spacing: 0.02em;
+  color: var(--color-ink);
+  opacity: 0.55;
+  padding: 0.5rem 0.2rem;
 }
+.landing__control:hover .landing__control-label { opacity: 1; color: var(--color-orpiment); background: var(--color-ink); }
