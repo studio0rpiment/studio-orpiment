@@ -19,3 +19,28 @@
 .landing__control { grid-column: 20 / 25; grid-row: stage-start / stage-end; z-index: 60; pointer-events: auto; cursor: pointer; background: transparent; border: none; padding: 0; display: flex; align-items: flex-end; justify-content: flex-end; }
 .landing__control-label { font-family: var(--font-body), ui-monospace, monospace; font-size: 0.8rem; letter-spacing: 0.02em; color: var(--color-ink); opacity: 0.55; padding: 0.5rem 0.2rem; }
 .landing__control:hover .landing__control-label { opacity: 1; color: var(--color-orpiment); background: var(--color-ink); }
+
+/* Touch: no double-tap-zoom delay on the interactive pieces. */
+.block, .cell, .landing__control { touch-action: manipulation; }
+
+/* ——— Mobile: its own portrait composition (not a shrunken poster) ———
+   8-column grid; row names match desktop so slot placements stay valid.
+   dvh (not vh) so the URL bar collapse doesn't jump the stage. */
+@media (max-width: 767px) {
+  .landing {
+    grid-template-columns: repeat(8, 1fr);
+    grid-template-rows: [head-start] auto [head-end] 1rem [stage-start] 42dvh [rule-1] 16dvh [rule-2] 12dvh [rule-3] minmax(3.25rem, 7dvh) [stage-end];
+    min-height: 100dvh;
+    padding: 1rem;
+    padding-left: max(1rem, env(safe-area-inset-left));
+    padding-right: max(1rem, env(safe-area-inset-right));
+    padding-bottom: max(1rem, env(safe-area-inset-bottom));
+  }
+  .landing__logo { grid-column: 1 / 4; margin-top: 0; }
+  .landing__wordmark { grid-column: 1 / 9; justify-self: start; }
+  .landing__description { grid-column: 1 / 5; grid-row: rule-3 / stage-end; align-self: end; justify-self: start; padding-top: 0.4rem; }
+  .landing__void { grid-column: 1 / -1; }
+  .landing__vrule { display: none; }
+  /* Control strip becomes a thumb-zone button in the bottom strip (≥44px). */
+  .landing__control { grid-column: 5 / 9; grid-row: rule-3 / stage-end; min-height: 44px; align-items: flex-end; justify-content: flex-end; }
+}

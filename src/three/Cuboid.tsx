@@ -37,6 +37,11 @@ export default function Cuboid({ element, kind }: { element: HTMLElement; kind: 
     const mesh = ref.current
     if (!mesh) return
     const r = element.getBoundingClientRect()
+    // Pieces hidden by the active layout (display:none) collapse their rect —
+    // hide the cuboid rather than easing a 1px ghost around.
+    const hidden = r.width < 2 && r.height < 2
+    mesh.visible = !hidden
+    if (hidden) { ready.current = false; return }
     const w = Math.max(r.width, 1); const h = Math.max(r.height, 1); const d = Math.min(w, h)
     const axis: 'x' | 'y' = h > w ? 'y' : 'x'
     const tx = r.left + w / 2 - size.width / 2; const ty = size.height / 2 - (r.top + h / 2)
