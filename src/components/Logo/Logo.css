@@ -1,0 +1,8 @@
+.logo {
+  font-family: var(--font-logo);
+  line-height: 0.8;
+  letter-spacing: -0.02em;
+  display: inline-block;
+}
+.logo--sm { font-size: 1.75rem; }
+.logo--lg { font-size: clamp(7rem, 4rem + 16vw, 20rem); line-height: 1; color: var(--color-ink); }

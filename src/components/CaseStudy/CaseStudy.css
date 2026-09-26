@@ -1,0 +1,21 @@
+.case-study { scroll-margin-top: 0; }
+
+/* the photograph runs edge to edge; the caption sits on the page grid */
+.case-study__cover { margin: 0; }
+.case-study__cover img { width: 100%; height: min(88svh, 56.25vw); object-fit: cover; }
+.case-study__cover figcaption { padding: 0.75rem var(--inset); }
+
+.case-study__lead { margin-top: clamp(3rem, 2rem + 4vw, 7rem); align-items: start; }
+.case-study__intro {
+  grid-column: 1 / span 7;
+  font-size: var(--step-2);
+  line-height: 1.35;
+  letter-spacing: -0.01em;
+  padding-left: calc(var(--corner) - var(--gutter));
+}
+.case-study__facts { grid-column: 9 / -1; }
+
+@media (max-width: 60rem) {
+  .case-study__intro, .case-study__facts { grid-column: 1 / -1; padding-left: 0; }
+  .case-study__facts { margin-top: 2.5rem; }
+}

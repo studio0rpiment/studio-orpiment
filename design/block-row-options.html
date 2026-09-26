@@ -1,0 +1,108 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Block Row Options</title>
+<style>
+@font-face { font-family: 'Rotor Overlay'; src: url('../src/assets/fonts/rotor-Variable_overlay.ttf') format('truetype'); font-weight: 100 900; }
+:root { --paper:#F5F4ED; --ink:#2B1810; --or:#EEBD34; }
+* { box-sizing: border-box; }
+body { margin:0; background:var(--paper); color:var(--ink); font-family:'Rotor Overlay', ui-monospace, monospace; font-size:1rem; line-height:1.5; }
+.top { display:flex; justify-content:space-between; align-items:flex-end; gap:2rem; padding:3rem 2.5rem 2rem; border-bottom:1px solid var(--ink); }
+h1 { font-family:'Helvetica Neue',Helvetica,Arial,sans-serif; font-weight:500; letter-spacing:-.035em; font-size:clamp(2.5rem,1.5rem + 4vw,5rem); line-height:1; margin:0; }
+.top p { max-width:36ch; margin:0; font-size:.8125rem; color:rgb(43 24 16/.65); }
+.grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(min(100%,38rem),1fr)); }
+.v { padding:1.5rem 2.5rem 2.5rem; border-bottom:1px solid rgb(43 24 16/.16); border-right:1px solid rgb(43 24 16/.16); }
+.v header { display:flex; align-items:baseline; gap:1rem; }
+.n { font-size:.6875rem; letter-spacing:.08em; color:rgb(43 24 16/.6); min-width:2.5em; }
+h2 { font-family:'Helvetica Neue',Helvetica,Arial,sans-serif; font-weight:500; letter-spacing:-.03em; font-size:1.75rem; margin:0; }
+.src { margin-left:auto; font-size:.6875rem; letter-spacing:.08em; text-transform:uppercase; color:rgb(43 24 16/.6); }
+.plate { margin:1.5rem 0 1rem; overflow-x:auto; }
+.plate svg { display:block; max-width:100%; height:auto; }
+.v p { margin:0; max-width:52ch; font-size:.8125rem; }
+.ref { background:rgb(43 24 16/.04); }
+.idx, .act { font-family:'Rotor Overlay', ui-monospace, monospace; font-size:11px; letter-spacing:.08em; fill:var(--ink); }
+.ttl { font-family:'Helvetica Neue',Helvetica,Arial,sans-serif; font-weight:500; font-size:34px; letter-spacing:-1px; fill:var(--ink); }
+</style></head><body>
+<div class="top"><h1>Block row options</h1><p>Eight alternatives to the dropped tab, each taken from a Song Cards border or arch. All keep the single flat colour and the index · title · action order.</p></div>
+<div class="grid">
+<article class="v ref">
+  <header><span class="n">Ref</span><h2>Current</h2><span class="src">from: Reference</span></header>
+  <div class="plate"><svg viewBox="-1 -1 600 150" width="600" height="150" role="img"><defs></defs><path d="M0,0 H284 V52.0 H498 V104 H0 Z" fill="#EEBD34"/>
+  <line x1="84" y1="0" x2="84" y2="104" stroke="#2B1810" stroke-opacity=".2"/>
+  <text x="42.0" y="56.0" class="idx" text-anchor="middle">01 . 03</text>
+  <text x="106" y="64.0" class="ttl">Projects</text>
+  <text x="391.0" y="82.0" class="act" text-anchor="middle">ALL PROJECTS</text></svg></div>
+  <p>The dropped tab from the reference: reads as a lowercase h turned on its side.</p>
+</article>
+<article class="v">
+  <header><span class="n">01</span><h2>Stepped</h2><span class="src">from: Geometric Kufic border</span></header>
+  <div class="plate"><svg viewBox="-1 -1 600 150" width="600" height="150" role="img"><defs></defs><path d="M0,0 H284 V18 H302 V36 H320 V52.0 H498 V104 H0 Z" fill="#EEBD34"/>
+  <line x1="84" y1="0" x2="84" y2="104" stroke="#2B1810" stroke-opacity=".2"/>
+  <text x="42.0" y="56.0" class="idx" text-anchor="middle">01 . 03</text>
+  <text x="106" y="64.0" class="ttl">Projects</text>
+  <text x="409.0" y="82.0" class="act" text-anchor="middle">ALL PROJECTS</text></svg></div>
+  <p>The title block descends to the action in three right-angle steps. Only horizontals and verticals; the stair points down and across toward the link.</p>
+</article>
+<article class="v">
+  <header><span class="n">02</span><h2>Lancet</h2><span class="src">from: Pointed arch inner frame</span></header>
+  <div class="plate"><svg viewBox="-1 -1 600 150" width="600" height="150" role="img"><defs></defs><path d="M0,0 H284 Q315.68,0 328,52.0 Q315.68,104 284,104 H0 Z" fill="#EEBD34"/><path d="M338,58.0 H518 Q536,58.0 544,81.0 Q536,104 518,104 H338 Z" fill="#EEBD34"/>
+  <line x1="84" y1="0" x2="84" y2="104" stroke="#2B1810" stroke-opacity=".2"/>
+  <text x="42.0" y="56.0" class="idx" text-anchor="middle">01 . 03</text>
+  <text x="106" y="64.0" class="ttl">Projects</text>
+  <text x="428.0" y="85.0" class="act" text-anchor="middle">ALL PROJECTS</text></svg></div>
+  <p>The title block closes in a pointed arch laid on its side, and the action repeats the point at half height. The pointer is literal, the line stays single.</p>
+</article>
+<article class="v">
+  <header><span class="n">03</span><h2>Ogee</h2><span class="src">from: Ogee / onion arch</span></header>
+  <div class="plate"><svg viewBox="-1 -1 600 150" width="600" height="150" role="img"><defs></defs><path d="M0,0 H284 V52.0 H474 C496.0,52.0 492.0,78.0 514,78.0 C492.0,78.0 496.0,104 474,104 H0 Z" fill="#EEBD34"/>
+  <line x1="84" y1="0" x2="84" y2="104" stroke="#2B1810" stroke-opacity=".2"/>
+  <text x="42.0" y="56.0" class="idx" text-anchor="middle">01 . 03</text>
+  <text x="106" y="64.0" class="ttl">Projects</text>
+  <text x="379.0" y="82.0" class="act" text-anchor="middle">ALL PROJECTS</text></svg></div>
+  <p>The action stays attached but ends in an ogee point: two S-curves meeting at the link. A single ornamental moment on an otherwise square system.</p>
+</article>
+<article class="v">
+  <header><span class="n">04</span><h2>Lozenge</h2><span class="src">from: Diamond interlace border</span></header>
+  <div class="plate"><svg viewBox="-1 -1 600 150" width="600" height="150" role="img"><defs></defs><path d="M0,0 H78 L104,52.0 L78,104 H0 Z" fill="#EEBD34"/><path d="M88,0 H284 L310,52.0 L284,104 H88 L114,52.0 Z" fill="#EEBD34"/><path d="M312,56.0 H488 L510,80.0 L488,104 H312 L334,80.0 Z" fill="#EEBD34"/><text x="43.0" y="56.0" class="idx" text-anchor="middle">01 . 03</text>
+  <text x="128" y="64.0" class="ttl">Projects</text>
+  <text x="415.0" y="84.0" class="act" text-anchor="middle">ALL PROJECTS</text></svg></div>
+  <p>Each cell is cut on the √2 diagonal so the blocks nest into one another like a chevron; the action is a lozenge pointing on.</p>
+</article>
+<article class="v">
+  <header><span class="n">05</span><h2>Meander edge</h2><span class="src">from: Geometric Kufic border</span></header>
+  <div class="plate"><svg viewBox="-1 -1 600 150" width="600" height="150" role="img"><defs></defs><path d="M0,0 H284 V52.0 H296 V44.0 H308 V52.0 H320 V44.0 H332 V52.0 H344 V44.0 H356 V52.0 H368 V44.0 H380 V52.0 H392 V44.0 H404 V52.0 H416 V44.0 H428 V52.0 H440 V44.0 H452 V52.0 H464 V44.0 H476 V52.0 H488 V44.0 H500 V52.0 H498 V104 H0 Z" fill="#EEBD34"/>
+  <line x1="84" y1="0" x2="84" y2="104" stroke="#2B1810" stroke-opacity=".2"/>
+  <text x="42.0" y="56.0" class="idx" text-anchor="middle">01 . 03</text>
+  <text x="106" y="64.0" class="ttl">Projects</text>
+  <text x="391.0" y="82.0" class="act" text-anchor="middle">ALL PROJECTS</text></svg></div>
+  <p>The dropped tab keeps its place but its upper edge becomes a squared meander, so the join reads as an ornamented band rather than a letterform.</p>
+</article>
+<article class="v">
+  <header><span class="n">06</span><h2>Scalloped</h2><span class="src">from: Trefoil / multifoil arch</span></header>
+  <div class="plate"><svg viewBox="-1 -1 600 150" width="600" height="150" role="img"><defs></defs><path d="M0,0 H284 V52.0 H498 V98 A13.38,13.38 0 0 1 471.25,98 A13.38,13.38 0 0 1 444.50,98 A13.38,13.38 0 0 1 417.75,98 A13.38,13.38 0 0 1 391.00,98 A13.38,13.38 0 0 1 364.25,98 A13.38,13.38 0 0 1 337.50,98 A13.38,13.38 0 0 1 310.75,98 A13.38,13.38 0 0 1 284.00,98 V104 H0 Z" fill="#EEBD34"/>
+  <line x1="84" y1="0" x2="84" y2="104" stroke="#2B1810" stroke-opacity=".2"/>
+  <text x="42.0" y="56.0" class="idx" text-anchor="middle">01 . 03</text>
+  <text x="106" y="64.0" class="ttl">Projects</text>
+  <text x="391.0" y="79.0" class="act" text-anchor="middle">ALL PROJECTS</text></svg></div>
+  <p>A flush action cell whose lower edge is a row of small lobes, from the multifoil arch. The row stays rectangular; only the hem is ornamented.</p>
+</article>
+<article class="v">
+  <header><span class="n">07</span><h2>Vesica</h2><span class="src">from: Vesica piscis inner frame</span></header>
+  <div class="plate"><svg viewBox="-1 -1 600 150" width="600" height="150" role="img"><defs></defs><path d="M0,0 H284 V104 H0 Z" fill="#EEBD34"/><path d="M298,74.88 Q404,16.879999999999995 510,74.88 Q404,132.88 298,74.88 Z" fill="#EEBD34"/>
+  <line x1="84" y1="0" x2="84" y2="104" stroke="#2B1810" stroke-opacity=".2"/>
+  <text x="42.0" y="56.0" class="idx" text-anchor="middle">01 . 03</text>
+  <text x="106" y="64.0" class="ttl">Projects</text>
+  <text x="404.0" y="78.88" class="act" text-anchor="middle">ALL PROJECTS</text></svg></div>
+  <p>The action detaches into an almond, pointed at both ends, set just below the row. Separate object, same colour.</p>
+</article>
+<article class="v">
+  <header><span class="n">08</span><h2>Patterned cell</h2><span class="src">from: Hexagonal lattice border</span></header>
+  <div class="plate"><svg viewBox="-1 -1 600 150" width="600" height="150" role="img"><defs><pattern id="hex" width="14" height="16" patternUnits="userSpaceOnUse">
+  <rect width="14" height="16" fill="#EEBD34"/>
+  <path d="M7,0 L14,4 L14,12 L7,16 L0,12 L0,4Z" fill="none" stroke="#2B1810" stroke-opacity=".22" stroke-width=".7"/>
+</pattern></defs><path d="M0,0 H284 V104 H0 Z" fill="#EEBD34"/><path d="M284,0 H498 V104 H284 Z" fill="url(#hex)"/><line x1="284" y1="0" x2="284" y2="104" stroke="#2B1810" stroke-opacity=".3"/><line x1="84" y1="0" x2="84" y2="104" stroke="#2B1810" stroke-opacity=".2"/>
+  <text x="42.0" y="56.0" class="idx" text-anchor="middle">01 . 03</text>
+  <text x="106" y="64.0" class="ttl">Projects</text>
+  <rect x="329.0" y="39.0" width="124" height="26" fill="#EEBD34"/>
+  <text x="391.0" y="56.0" class="act" text-anchor="middle">ALL PROJECTS →</text></svg></div>
+  <p>No change of silhouette at all: one flat bar, and the action cell is marked by a fine hexagonal lattice instead of by its shape.</p>
+</article></div>
+</body></html>

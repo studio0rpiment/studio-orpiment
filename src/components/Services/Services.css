@@ -1,0 +1,22 @@
+.services { row-gap: 3.5rem; }
+.services__item {
+  grid-column: span 3;
+  padding-top: 1rem;
+  border-top: 0.25rem solid var(--color-block);
+  min-height: 16rem;
+  display: flex;
+  flex-direction: column;
+}
+.services__num { margin: calc(-1rem - 0.25rem - 1.75rem) 0 0; align-self: flex-start; }
+.services__title { font-size: var(--step-2); letter-spacing: var(--display-tracking); line-height: 1.05; margin: 1.5rem 0 auto; max-width: 11ch; }
+.services__body { margin: 2rem 0 0; font-size: var(--step--1); max-width: 34ch; color: var(--color-ink-soft); }
+.services__sound {
+  grid-column: 1 / -1;
+  margin: 0;
+  padding-top: 1rem;
+  border-top: 1px solid var(--color-rule);
+  font-size: var(--step--1);
+  color: var(--color-ink-soft);
+}
+@media (max-width: 60rem) { .services__item { grid-column: span 6; min-height: 12rem; } }
+@media (max-width: 40rem) { .services__item { grid-column: 1 / -1; min-height: 0; } }

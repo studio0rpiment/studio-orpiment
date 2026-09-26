@@ -1,0 +1,12 @@
+.facts { margin: 0; font-size: var(--step--1); }
+.facts__row {
+  display: grid;
+  grid-template-columns: 5.5rem 1fr;
+  gap: 1rem;
+  padding: 0.8rem 0;
+  border-top: 1px solid var(--color-ink);
+}
+.facts__row + .facts__row { border-top-color: var(--color-rule); }
+.facts__row:last-child { border-bottom: 1px solid var(--color-rule); }
+.facts dt { padding-top: 0.15rem; }
+.facts dd { margin: 0; }

@@ -1,0 +1,50 @@
+/* Studio Orpiment — design tokens */
+:root {
+  --color-bg: #F5F4ED;        /* paper */
+  --color-ink: #2B1810;       /* chocolate — blocks, type */
+  --color-orpiment: #EEBD34;
+  --color-ink-soft: rgb(43 24 16 / 0.6);
+  --color-rule: rgb(43 24 16 / 0.16);
+  /* solid blocks (corners, label rows, intro, footer): orpiment with chocolate type */
+  --color-block: var(--color-orpiment);
+  --color-on-block: var(--color-ink);
+  --color-on-block-soft: rgb(43 24 16 / 0.62);
+  --color-block-rule: rgb(43 24 16 / 0.2);
+
+  /* the menu inverts it: chocolate with orpiment type */
+  --color-menu: var(--color-ink);
+  --color-on-menu: var(--color-orpiment);
+  --color-on-menu-soft: rgb(238 189 52 / 0.6);
+  --color-menu-rule: rgb(238 189 52 / 0.2);
+
+  /* titles: a plain European grotesk from the system; all running text: Rotor */
+  --font-display: 'Helvetica Neue', Helvetica, 'Futura', Arial, sans-serif;
+  --font-text: 'Rotor Overlay', ui-monospace, monospace;
+  --display-weight: 500;
+  --display-tracking: -0.035em;
+  --font-logo: 'Monstera', var(--font-display);
+
+  /* type scale (rem) */
+  --step--2: 0.6875rem;
+  --step--1: 0.8125rem;
+  --step-0: 1rem;
+  --step-1: 1.25rem;
+  --step-2: clamp(1.5rem, 1.1rem + 1.4vw, 2.25rem);
+  --step-3: clamp(2rem, 1.2rem + 3vw, 3.75rem);
+  --step-4: clamp(3rem, 1rem + 7vw, 8.5rem);
+  --step-5: clamp(4.5rem, 1rem + 15vw, 17rem);
+
+  /* geometry */
+  --corner: clamp(3.75rem, 3rem + 2vw, 5.25rem);  /* corner blocks */
+  --block-h: clamp(4rem, 3rem + 3vw, 6.5rem);     /* block rows */
+  --gutter: clamp(1rem, 0.5rem + 2vw, 2.5rem);
+  --inset: calc(var(--corner) + var(--gutter));   /* text aligns past the corner block */
+  --col-gap: clamp(0.75rem, 0.4rem + 1vw, 1.5rem);
+  --section-gap: clamp(6rem, 3rem + 9vw, 12rem);
+  --max-width: 120rem;
+
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-in-out: cubic-bezier(0.76, 0, 0.24, 1);
+  --t-slow: 1100ms;
+  --t-med: 700ms;
+}

@@ -1,0 +1,76 @@
+/*
+ * Label row: a thin orpiment line with two slim filled bands at different
+ * heights. The index band sits low at the left; the line runs under the
+ * title; at the end it rises, and the action band sits at the top.
+ *
+ *   [01 03]──────── Title ────────┐
+ *                                 └[ ALL PROJECTS ]   (reads: low → high)
+ */
+.block-row {
+  --line: 0.25rem;
+  --band: 1.75rem;
+  --row-h: calc(var(--block-h) * 0.9);
+  display: flex;
+  align-items: flex-end;
+  height: var(--row-h);
+  margin-left: calc(-1 * var(--gutter));
+}
+.block-cell {
+  display: flex;
+  align-items: center;
+  margin: 0;
+  color: var(--color-ink);
+  text-decoration: none;
+}
+
+/* low band at the left edge */
+.block-cell--index {
+  height: var(--band);
+  gap: 0.5em;
+  padding: 0 0.75rem 0 var(--gutter);
+  background: var(--color-block);
+  color: var(--color-on-block);
+  font-family: var(--font-text);
+  font-size: var(--step--2);
+  letter-spacing: 0.08em;
+  font-variant-numeric: tabular-nums;
+}
+.block-cell__of { opacity: 0.55; }
+
+/* the title stands on the line */
+.block-cell--title {
+  align-self: stretch;
+  align-items: flex-end;
+  padding: 0 clamp(1.5rem, 1rem + 2vw, 3rem) 0.55rem;
+  border-bottom: var(--line) solid var(--color-block);
+  font-family: var(--font-display);
+  font-weight: var(--display-weight);
+  font-size: var(--step-2);
+  letter-spacing: var(--display-tracking);
+  line-height: 1;
+  white-space: nowrap;
+}
+
+/* high band: the line rises from the end of the title to meet it */
+.block-cell--action {
+  position: relative;
+  align-self: flex-start;
+  height: var(--band);
+  padding: 0 clamp(1.5rem, 1rem + 2vw, 3rem);
+  background: var(--color-block);
+  color: var(--color-on-block);
+  font-family: var(--font-text);
+  font-size: var(--step--2);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+/* the rise: the title's right edge, drawn only when an action follows */
+.block-cell--title:has(+ .block-cell--action) { border-right: var(--line) solid var(--color-block); }
+a.block-cell--action:hover { background: var(--color-ink); color: var(--color-orpiment); }
+
+@media (max-width: 40rem) {
+  .block-row { max-width: 100vw; }
+  .block-cell--title { padding: 0 1rem 0.45rem; }
+  .block-cell--action { padding: 0 0.75rem; min-width: 0; flex-shrink: 1; overflow: hidden; text-overflow: ellipsis; }
+}

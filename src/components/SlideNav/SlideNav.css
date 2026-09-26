@@ -1,0 +1,17 @@
+.slide-nav {
+  display: flex;
+  background: var(--color-bg);
+  border-left: 1px solid var(--color-rule);
+}
+.slide-nav__btn {
+  width: clamp(3rem, 2.5rem + 1.5vw, 4rem);
+  height: clamp(3rem, 2.5rem + 1.5vw, 4rem);
+  display: grid;
+  place-items: center;
+  background: transparent;
+  border: 0;
+  color: var(--color-ink);
+}
+.slide-nav__btn + .slide-nav__btn { border-left: 1px solid var(--color-rule); }
+.slide-nav__btn svg { width: 0.875rem; height: 0.875rem; fill: none; stroke: currentColor; stroke-width: 1.25; }
+.slide-nav__btn:hover { background: var(--color-block); color: var(--color-on-block); }

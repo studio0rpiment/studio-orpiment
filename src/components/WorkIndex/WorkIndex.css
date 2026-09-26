@@ -1,0 +1,43 @@
+.work-index__head,
+.work-index__row {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: subgrid;
+  align-items: baseline;
+}
+.work-index__head { padding-bottom: 0.75rem; border-bottom: 1px solid var(--color-ink); }
+.work-index__list {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: subgrid;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.work-index__row { padding: 1.1rem 0; border-bottom: 1px solid var(--color-rule); }
+.work-index__num { grid-column: 1 / span 1; font-size: var(--step--2); letter-spacing: 0.08em; color: var(--color-ink-soft); }
+.work-index__title { grid-column: 2 / span 5; font-size: var(--step-2); letter-spacing: var(--display-tracking); }
+.work-index__title a { text-decoration: none; }
+.work-index__arrow { font-size: 0.5em; margin-left: 0.5em; vertical-align: 0.6em; color: var(--color-ink-soft); }
+.work-index__title a:hover .work-index__arrow { color: var(--color-orpiment); }
+.work-index__what { grid-column: 7 / span 2; font-size: var(--step--1); }
+.work-index__client { grid-column: 9 / span 3; font-size: var(--step--1); color: var(--color-ink-soft); }
+.work-index__year { grid-column: 12 / span 1; font-size: var(--step--1); text-align: right; font-variant-numeric: tabular-nums; }
+.work-index__head .work-index__num,
+.work-index__head .work-index__title,
+.work-index__head .work-index__what,
+.work-index__head .work-index__client,
+.work-index__head .work-index__year { font-family: var(--font-text); font-size: var(--step--2); letter-spacing: 0.08em; color: var(--color-ink-soft); }
+
+@media (max-width: 50rem) {
+  .work-index__head { display: none; }
+  .work-index__row { row-gap: 0.25rem; }
+  .work-index__num { grid-column: 1 / span 2; }
+  .work-index__title { grid-column: 3 / span 7; }
+  .work-index__year { grid-column: 10 / -1; }
+  .work-index__what, .work-index__client { grid-column: 3 / -1; }
+}
+@media (max-width: 50rem) {
+  .work-index__num, .work-index__title, .work-index__year { grid-row: 1; }
+  .work-index__client.is-empty { display: none; }
+}

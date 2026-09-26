@@ -1,0 +1,15 @@
+.section-head {
+  grid-column: 1 / -1;
+  margin-bottom: clamp(2.5rem, 1.5rem + 3vw, 5rem);
+}
+.section-head__title {
+  font-size: var(--step-5);
+  letter-spacing: var(--display-tracking);
+  margin-top: clamp(2.5rem, 1.5rem + 3vw, 5rem);
+  padding-left: var(--corner);
+  margin-left: calc(-1 * var(--gutter));
+}
+
+@media (max-width: 40rem) {
+  .section-head__title { padding-left: 0; margin-left: 0; font-size: var(--step-4); }
+}

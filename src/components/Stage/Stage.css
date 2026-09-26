@@ -1,0 +1,70 @@
+.stage {
+  display: grid;
+  grid-template-columns: minmax(0, 9fr) minmax(0, 11fr);
+  height: 100vh;
+  height: 100svh;
+  min-height: 36rem;
+}
+
+.stage__panel {
+  position: relative;
+  display: grid;
+  grid-template-rows: var(--corner) 1fr auto 1fr auto;
+  padding: 0 var(--gutter) clamp(1.5rem, 1rem + 2vw, 3rem);
+  border-right: 1px solid var(--color-rule);
+}
+.stage__name {
+  grid-row: 1;
+  align-self: center;
+  padding-left: calc(var(--corner));
+  font-size: clamp(1.5rem, 1.1rem + 1.2vw, 2.25rem);
+  letter-spacing: var(--display-tracking);
+}
+.stage__blocks { grid-row: 3; }
+.stage__foot {
+  grid-row: 5;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 2rem;
+  padding-left: var(--corner);
+}
+.stage__disciplines {
+  display: flex;
+  flex-direction: column;
+  font-size: var(--step-3);
+  line-height: 1.02;
+}
+.stage__lede {
+  margin: 0;
+  max-width: 24ch;
+  font-size: var(--step--1);
+  line-height: 1.5;
+  color: var(--color-ink-soft);
+}
+
+/* phone + narrow tablet: name, photograph, then the label row and disciplines */
+@media (max-width: 56rem) {
+  .stage {
+    grid-template-columns: 1fr;
+    grid-template-rows: var(--corner) minmax(22rem, 68svh) auto;
+    height: auto;
+    min-height: 0;
+  }
+  .stage__panel { display: contents; }
+  .stage__name {
+    grid-row: 1;
+    padding: 0 var(--corner);
+    font-size: var(--step-1);
+    text-align: center;
+  }
+  .project-slider { grid-row: 2; }
+  .stage__blocks { grid-row: 3; margin: 2.5rem 0 0; }
+  .stage__foot {
+    grid-row: 4;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1.5rem;
+    padding: 3rem var(--gutter) 0;
+  }
+}
