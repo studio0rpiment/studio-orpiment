@@ -23,3 +23,24 @@
   box-decoration-break: clone;
   -webkit-box-decoration-break: clone;
 }
+
+/* A line that pairs a highlight with plain words on the SAME line under ONE
+   shared ink bar (e.g. "physical experiences."). The line carries the chip
+   treatment; the highlight inside only keeps its accent color. */
+.description__line {
+  display: block;
+  width: fit-content;
+  white-space: nowrap;
+  color: var(--color-bg);
+  background-color: var(--color-ink);
+  padding: 0.1em 0.35em;
+  margin-left: auto; /* right-align with the other chips on desktop */
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+}
+.description__line .description__highlight {
+  display: inline;
+  padding: 0;
+  margin-left: 0;
+  background: none;
+}

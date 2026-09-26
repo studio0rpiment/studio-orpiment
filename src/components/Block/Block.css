@@ -1,8 +1,0 @@
-.block {
-  /* Transparent placeholder + click hit-target: the cuboid rendered over this
-     rect by ViewportCanvas provides the fill. Above cells so it wins overlaps. */
-  background: transparent;
-  z-index: 3;
-  pointer-events: auto;
-  cursor: pointer;
-}

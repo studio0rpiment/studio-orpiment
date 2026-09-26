@@ -36,9 +36,22 @@
     padding-right: max(1rem, env(safe-area-inset-right));
     padding-bottom: max(1rem, env(safe-area-inset-bottom));
   }
-  .landing__logo { grid-column: 1 / 4; margin-top: 0; }
+  /* Logo owns the left half; tagline owns the right half. Their meeting
+     edge draws a vertical line in the negative space at 50%. The S0 drops to
+     10rem so the glyph ends before the 50% line instead of sliding under the
+     tagline. --logo-ink-bearing is Monstera's internal top gap (~0.23em):
+     the tagline pads by the same amount so both INK tops align. */
+  .landing { --logo-mobile-size: 10rem; --logo-ink-bearing: 0.23; }
+  .landing__logo { grid-column: 1 / 5; margin-top: 0; }
+  .landing__logo .logo { font-size: var(--logo-mobile-size); }
   .landing__wordmark { grid-column: 1 / 9; justify-self: start; }
-  .landing__description { grid-column: 1 / 5; grid-row: rule-3 / stage-end; align-self: end; justify-self: start; padding-top: 0.4rem; }
+  /* Tagline: top right half, LEFT-justified so its left edge sits on the
+     50% line opposite the logo. */
+  .landing__description { grid-column: 5 / 9; grid-row: head-start / head-end; align-self: start; justify-self: stretch; padding-top: calc(var(--logo-mobile-size) * var(--logo-ink-bearing) + 6px); }
+  .landing__description .description { font-size: 0.72rem; line-height: 1.15; text-align: left; }
+  .landing__description .description__highlight { padding: 0.05em 0.3em; margin-left: 0; margin-right: auto; }
+  .landing__description .description__line { padding: 0.05em 0.3em; margin-left: 0; margin-right: auto; }
+  .landing__description .description__line .description__highlight { padding: 0; }
   .landing__void { grid-column: 1 / -1; }
   .landing__vrule { display: none; }
   /* Control strip becomes a thumb-zone button in the bottom strip (≥44px). */

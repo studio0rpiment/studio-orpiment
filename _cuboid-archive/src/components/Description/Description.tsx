@@ -11,7 +11,7 @@ export default function Description() {
       <span className="description__highlight">interactive multimedia</span>{' '}
       studio working in{' '}
       <span className="description__highlight">web-based</span> and{' '}
-      <span className="description__highlight">physical</span> experiences.
+      <span className="description__line"><span className="description__highlight">physical</span> experiences.</span>
     </p>
   )
 }

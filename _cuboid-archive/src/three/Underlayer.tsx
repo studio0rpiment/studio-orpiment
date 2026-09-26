@@ -20,13 +20,17 @@ import { onBump } from './rotationStore'
  */
 
 const FRAME_URLS = [
-  '/models/underlayer/lotus_1.bin',
-  '/models/underlayer/lily_1.bin',
-  '/models/underlayer/cattail_1.bin',
+  '/models/underlayer/lotus_2.bin', // pink bloom
+  '/models/underlayer/lily_1.bin', // green pads
+  '/models/underlayer/cattail_1.bin', // olive spikes
 ]
 const POINT_COUNT = 24000
 /** ambient morph rate, phases/second (one full form change ≈ 25s) */
 const BASE_SPEED = 0.04
+/** fraction of each phase spent DWELLING on a resolved form, per side —
+    the cloud holds a pure frame (true colors) between transitions instead
+    of living in a muddy mid-blend */
+const DWELL = 0.35
 /** extra phase velocity added per cuboid click */
 const CLICK_IMPULSE = 0.5
 /** impulse decay factor, per second */
@@ -43,6 +47,8 @@ export default function Underlayer() {
   const [frames, setFrames] = useState<Frame[] | null>(null)
   const phaseRef = useRef(0)
   const impulseRef = useRef(0)
+  const lastKRef = useRef(-1)
+  const lastBaseRef = useRef(-1)
 
   const geometry = useMemo(() => {
     const geo = new THREE.BufferGeometry()
@@ -123,7 +129,13 @@ export default function Underlayer() {
     const base = Math.floor(phase)
     const a = frames[base % n]
     const b = frames[(base + 1) % n]
-    const k = smoothstep(phase - base)
+    const frac = phase - base
+    const travel = frac <= DWELL ? 0 : frac >= 1 - DWELL ? 1 : (frac - DWELL) / (1 - 2 * DWELL)
+    const k = smoothstep(travel)
+    // Dwelling: the buffers already hold this exact blend — skip the rewrite.
+    if (k === lastKRef.current && base === lastBaseRef.current) return
+    lastKRef.current = k
+    lastBaseRef.current = base
     const pos = geometry.getAttribute('position') as THREE.BufferAttribute
     const col = geometry.getAttribute('color') as THREE.BufferAttribute
     const po = pos.array as Float32Array

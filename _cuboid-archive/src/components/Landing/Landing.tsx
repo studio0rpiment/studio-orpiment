@@ -1,9 +1,13 @@
-import { CSSProperties, useState } from 'react'
+import { CSSProperties, useEffect, useState } from 'react'
 import Logo from '../Logo/Logo'
 import Wordmark from '../Wordmark/Wordmark'
 import Description from '../Description/Description'
 import Block from '../Block/Block'
 import { bumpRotation } from '../../three/rotationStore'
+import WorkStrip from '../WorkStrip/WorkStrip'
+import { onSpread } from '../../three/spreadStore'
+import { navigate } from '../../viewStore'
+import { BLOCK_TO_PROJECT, WORK_BLOCK } from '../../projects'
 import { DESKTOP, MOBILE, ALL_CELL_IDS, placementFor } from './layouts'
 import { useIsMobile } from './useIsMobile'
 import './Landing.css'
@@ -21,12 +25,23 @@ export default function Landing() {
   // cuboids hide themselves when the rect collapses.
   const visibleCells = new Set(config.cellIds)
 
+  // A spread change turns every visible piece one quarter — the information
+  // arrives by rotation.
+  useEffect(
+    () =>
+      onSpread(() => {
+        for (const id of [...config.blockIds, ...config.cellIds]) bumpRotation(id)
+      }),
+    [config],
+  )
+
   function styleFor(id: string): CSSProperties {
     const p = placementFor(config, id, layout)
     return {
       gridColumn: p.col,
       gridRow: p.row,
-      position: p.straddle ? 'relative' : 'static',
+      // always relative: harmless for layout, and face labels anchor to the piece
+      position: 'relative',
       top: p.straddle ? '50%' : 'auto',
     }
   }
@@ -49,7 +64,20 @@ export default function Landing() {
       <span className="landing__vrule landing__vrule--rp-left" aria-hidden />
       <span className="landing__vrule landing__vrule--rp-right" aria-hidden />
       {config.blockIds.map((id) => (
-        <Block key={id} id={id} style={styleFor(id)} onActivate={() => bumpRotation(id)} />
+        <Block
+          key={id}
+          id={id}
+          style={styleFor(id)}
+          label={isMobile && id === WORK_BLOCK ? 'work' : undefined}
+          onActivate={() => {
+            bumpRotation(id)
+            if (id === WORK_BLOCK) navigate('#/work')
+            else {
+              const slug = BLOCK_TO_PROJECT[id]
+              if (slug) navigate(`#/work/${slug}`)
+            }
+          }}
+        />
       ))}
       {ALL_CELL_IDS.map((id) => (
         <div
@@ -60,9 +88,16 @@ export default function Landing() {
           onClick={() => bumpRotation(id)}
         />
       ))}
-      <button type="button" className="landing__control" onClick={() => setLayout((l) => (l + 1) % layoutCount)}>
-        <span className="landing__control-label">rearrange · {(layout % layoutCount) + 1}/{layoutCount}</span>
-      </button>
+      {isMobile ? (
+        <button type="button" className="landing__control" onClick={() => setLayout((l) => (l + 1) % layoutCount)}>
+          <span className="landing__control-label">rearrange · {(layout % layoutCount) + 1}/{layoutCount}</span>
+        </button>
+      ) : (
+        <WorkStrip
+          onRearrange={() => setLayout((l) => (l + 1) % layoutCount)}
+          layoutLabel={`${(layout % layoutCount) + 1}/${layoutCount}`}
+        />
+      )}
     </main>
   )
 }
