@@ -1,4 +1,6 @@
 import CaseStudy from '../CaseStudy/CaseStudy'
+import { useKey } from '../../hooks/useKey'
+import { navigate } from '../../hooks/useRoute'
 import { BlockCell, BlockRow } from '../BlockRow/BlockRow'
 import type { CaseStudy as Study, Tone } from '../../content/types'
 import './CaseStudyPanel.css'
@@ -16,6 +18,12 @@ type Props = {
  * It is the rest of the page: it ends with the live site and a way back out.
  */
 export default function CaseStudyPanel({ study, tone = 'paper', exitHref }: Props) {
+  // Escape leaves the study for its slide, at the top of the slideshow step —
+  // unless the menu is open, where Escape belongs to the menu
+  useKey(['Escape'], () => {
+    if (!document.body.classList.contains('is-locked')) navigate(exitHref)
+  }, true)
+
   return (
     <section className="case-panel" id={`case-${study.slug}`} data-tone={tone}>
       <CaseStudy study={study} action={{ href: exitHref, label: 'Exit' }} />
