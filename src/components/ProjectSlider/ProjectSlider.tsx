@@ -1,5 +1,8 @@
 import { AnimationEvent, CSSProperties } from 'react'
 import SlideCard from '../SlideCard/SlideCard'
+import LiveEmbed from '../LiveEmbed/LiveEmbed'
+import { useMediaQuery } from '../../hooks/useMediaQuery'
+import { usePrefersReducedMotion } from '../../hooks/usePrefersReducedMotion'
 import SlideNav from '../SlideNav/SlideNav'
 import { useKey } from '../../hooks/useKey'
 import type { Project } from '../../content/types'
@@ -29,6 +32,12 @@ export default function ProjectSlider({ slides, index, previous, direction, onPr
   useKey(['ArrowLeft'], onPrev, keysActive)
   useKey(['ArrowRight'], onNext, keysActive)
 
+  // live renders only where they can be played with: a hovering pointer,
+  // and no request for reduced motion
+  const pointer = useMediaQuery('(hover: hover) and (pointer: fine)')
+  const reduced = usePrefersReducedMotion()
+  const live = pointer && !reduced
+
   const onRevealEnd = (e: AnimationEvent<HTMLDivElement>) => {
     if (e.target === e.currentTarget) onSettled()
   }
@@ -49,6 +58,9 @@ export default function ProjectSlider({ slides, index, previous, direction, onPr
               style={{ objectPosition: s.focus ?? '50% 50%' } as CSSProperties}
               decoding="async"
             />
+            {s.embed && live && (state === 'active' || state === 'entering') && (
+              <LiveEmbed src={s.embed} title={s.title} />
+            )}
           </div>
         )
       })}

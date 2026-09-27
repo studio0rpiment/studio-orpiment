@@ -52,7 +52,7 @@ export type CloudForm = { id: string; label: string; src: string }
  * the stage's colour for a slide: paper, orpiment, or chocolate; or a
  * project's own palette (defined in styles/tones.css)
  */
-export type Tone = 'paper' | 'orpiment' | 'ink' | 'aegf' | 'ulrike' | 'earth' | 'tttl' | 'wmv' | 'wayside' | 'decides' | 'tbws'
+export type Tone = 'paper' | 'orpiment' | 'ink' | 'aegf' | 'aegf26' | 'ulrike' | 'earth' | 'tttl' | 'wmv' | 'wayside' | 'decides' | 'tbws'
 
 /**
  * A project: one record feeds the opening slideshow (when it has an image)
@@ -88,6 +88,11 @@ export type Project = {
   caseStudy?: string
   /** outbound link: live site, video, article */
   href?: string
+  /**
+   * a live render of the project's site, shown over its photograph while its
+   * slide is up (on screens with a pointer); the photograph is the still
+   */
+  embed?: string
 }
 
 export type CaseStudy = {

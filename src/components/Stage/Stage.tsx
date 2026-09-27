@@ -108,13 +108,15 @@ export default function Stage({ slides, hold, onTone }: Props) {
             <BlockCell kind="action" href="/#work">All projects</BlockCell>
           </BlockRow>
 
-          {/* the project's own words, changing with the slide */}
+          {/* the project, changing with the slide: its title large, its
+              keywords as inverted bands, then its sentence */}
           <div className="stage__foot" key={shown?.id}>
-            <p className="display stage__disciplines tone-text">
+            {shown && <p className="display stage__title tone-text">{shown.title}</p>}
+            <ul className="stage__keywords" aria-label="Keywords">
               {(shown?.disciplines ?? site.disciplines).map((d) => (
-                <span key={d}>{d}</span>
+                <li className="band" key={d}>{d}</li>
               ))}
-            </p>
+            </ul>
             {shown?.about && <p className="stage__lede tone-text">{shown.about}</p>}
           </div>
         </div>

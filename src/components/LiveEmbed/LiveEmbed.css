@@ -1,0 +1,14 @@
+.live-embed {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity var(--t-med) var(--ease-out);
+}
+.live-embed.is-loaded { opacity: 1; }
+/* the frame takes no input of its own; the wrapper relays the pointer to it */
+.live-embed iframe {
+  width: 100%;
+  height: 100%;
+  border: 0;
+  pointer-events: none;
+}
