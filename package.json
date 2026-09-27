@@ -8,7 +8,7 @@
     "build": "tsc --noEmit && vite build",
     "preview": "vite preview",
     "typecheck": "tsc --noEmit",
-    "ship": "npm run build && git add -A && git commit && git push"
+    "ship": "sh scripts/ship.sh"
   },
   "dependencies": {
     "@react-three/drei": "^9.114.0",

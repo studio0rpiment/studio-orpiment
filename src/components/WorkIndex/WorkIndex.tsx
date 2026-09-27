@@ -1,11 +1,14 @@
 import SectionHead from '../SectionHead/SectionHead'
-import type { WorkEntry } from '../../content/types'
+import RouteLink from '../RouteLink/RouteLink'
+import type { Project } from '../../content/types'
 import './WorkIndex.css'
 
-export default function WorkIndex({ entries }: { entries: WorkEntry[] }) {
+type Props = { projects: Project[]; index: string }
+
+export default function WorkIndex({ projects, index }: Props) {
   return (
-    <section className="work-index grid section" id="work" aria-label="Other work">
-      <SectionHead index="03" label="Other work" />
+    <section className="work-index grid section" id="work" aria-label="Work">
+      <SectionHead index={index} label="Work" />
       <div className="work-index__head eyebrow" aria-hidden="true">
         <span className="work-index__num">N°</span>
         <span className="work-index__title">Project</span>
@@ -14,21 +17,31 @@ export default function WorkIndex({ entries }: { entries: WorkEntry[] }) {
         <span className="work-index__year">Year</span>
       </div>
       <ol className="work-index__list">
-        {entries.map((e, i) => (
-          <li className="work-index__row" key={e.title}>
-            <span className="work-index__num">{String(i + 1).padStart(3, '0')}</span>
-            <span className="display work-index__title">
-              {e.href ? (
-                <a href={e.href} target="_blank" rel="noreferrer">{e.title}<span className="work-index__arrow">↗</span></a>
-              ) : (
-                e.title
-              )}
-            </span>
-            <span className="work-index__what">{e.what}</span>
-            <span className={`work-index__client ${e.client ? '' : 'is-empty'}`}>{e.client ?? '—'}</span>
-            <span className="work-index__year">{e.year}</span>
-          </li>
-        ))}
+        {projects.map((p, i) => {
+          const href = p.caseStudy ? `/work/${p.caseStudy}` : p.href
+          return (
+            <li className="work-index__row" key={p.id} id={`work-${p.id}`}>
+              <span className="work-index__num">{String(i + 1).padStart(3, '0')}</span>
+              <span className="display work-index__title">
+                {href ? (
+                  <RouteLink href={href}>
+                    {p.title}
+                    {p.caseStudy ? (
+                      <span className="band work-index__tag">Case study</span>
+                    ) : (
+                      <span className="work-index__arrow">↗</span>
+                    )}
+                  </RouteLink>
+                ) : (
+                  p.title
+                )}
+              </span>
+              <span className="work-index__what">{p.kind}</span>
+              <span className={`work-index__client ${p.client ? '' : 'is-empty'}`}>{p.client ?? '—'}</span>
+              <span className="work-index__year">{p.year}</span>
+            </li>
+          )
+        })}
       </ol>
     </section>
   )

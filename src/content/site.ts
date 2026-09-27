@@ -1,4 +1,4 @@
-import type { Service, WorkEntry } from './types'
+import type { Service } from './types'
 
 export const site = {
   name: 'Studio Orpiment',
@@ -15,21 +15,9 @@ export const site = {
 }
 
 export const nav = [
-  { href: '#work', label: 'Work' },
-  { href: '#services', label: 'Services' },
-  { href: '#studio', label: 'Studio' },
-]
-
-/** "Other work" index — what it was, who it was for, the year */
-export const work: WorkEntry[] = [
-  { title: 'Adventurous Electric Guitar Festival', what: 'Festival website, real-time 3D', client: 'Adventurous Electric Guitar Festival', year: '2026', href: 'https://adventurous-guitar-2026.vercel.app' },
-  { title: 'Song Cards', what: 'Interactive listening objects', year: 'In progress' },
-  { title: 'Sites for artists', what: 'Websites and identities for musicians and performers', client: 'Louise et Ondarel, The Twiolins, and others', year: '2024–26' },
-  { title: 'Tied To The Land', what: 'Exhibition', year: '2025' },
-  { title: 'Earth Out of Joint', what: 'Video', year: '2025' },
-  { title: 'Three Black Wall Streets', what: 'Web-based 3D', year: '2021' },
-  { title: 'White Mob Violence Map', what: 'Geospatial visualization', year: '2021' },
-  { title: 'Cast Down Tither', what: 'Performance system', year: '2017–' },
+  { href: '/#work', label: 'Work' },
+  { href: '/#services', label: 'Services' },
+  { href: '/#studio', label: 'Studio' },
 ]
 
 export const services: Service[] = [

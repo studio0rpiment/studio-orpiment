@@ -43,6 +43,15 @@
   text-decoration: none;
 }
 .slide-card__more:hover { color: var(--color-ink-soft); }
+/* a case study is the one thing on the card set in the band */
+.slide-card__more.is-case {
+  bottom: 0.6rem;
+  padding: 0.3rem 0.6rem;
+  margin-left: -0.6rem;
+  background: var(--color-block);
+  color: var(--color-on-block);
+}
+.slide-card__more.is-case:hover { background: var(--color-ink); color: var(--color-orpiment); }
 
 /* position in the set, drawn along the card's lower edge */
 .slide-card__progress {

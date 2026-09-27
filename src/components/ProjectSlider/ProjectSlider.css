@@ -5,6 +5,9 @@
 }
 .project-slider__photo { position: absolute; inset: 0; }
 .project-slider__photo img { width: 100%; height: 100%; object-fit: cover; }
+/* artwork shown whole, on chocolate, clear of the card */
+.project-slider__photo.is-contain { background: var(--color-ink); padding: 8% 12% 28%; }
+.project-slider__photo.is-contain img { object-fit: contain; }
 
 .project-slider__photo.is-idle { visibility: hidden; }
 .project-slider__photo.is-previous { z-index: 1; }
@@ -14,12 +17,12 @@
 /* the incoming photograph is uncovered in the direction of travel,
    while it eases back from a slight scale — a slow, still movement */
 .project-slider__photo.is-entering {
-  animation: slider-wipe-next var(--t-slow) var(--ease-in-out) both;
+  animation: slider-wipe-next 750ms var(--ease-in-out) both;
 }
 .project-slider[data-direction='-1'] .project-slider__photo.is-entering {
   animation-name: slider-wipe-prev;
 }
-.project-slider__photo.is-entering img { animation: slider-settle calc(var(--t-slow) * 1.4) var(--ease-out) both; }
+.project-slider__photo.is-entering img { animation: slider-settle 1100ms var(--ease-out) both; }
 
 @keyframes slider-wipe-next { from { clip-path: inset(0 0 0 100%); } to { clip-path: inset(0 0 0 0); } }
 @keyframes slider-wipe-prev { from { clip-path: inset(0 100% 0 0); } to { clip-path: inset(0 0 0 0); } }

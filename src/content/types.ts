@@ -23,20 +23,30 @@ export type Fact = { label: string; value: string }
 /** a point-cloud form the exhibit can morph to */
 export type CloudForm = { id: string; label: string; src: string }
 
-/** a project in the opening stage slider */
-export type Slide = {
+/**
+ * A project: one record feeds the opening slideshow (when it has an image)
+ * and the work index.
+ */
+export type Project = {
   id: string
   title: string
-  /** short descriptive lines under the title (place, format) */
-  lines: string[]
+  /** what it was — format */
   kind: string
+  /** who it was for; omitted when self-initiated or not yet filled in */
+  client?: string
   year: string
-  image: string
-  alt: string
+  /** short descriptive lines on the slideshow card */
+  lines: string[]
+  image?: string
+  alt?: string
   /** object-position for the photograph's crop */
   focus?: string
-  /** in-page anchor or outbound link */
-  href: string
+  /** 'contain' for artwork that must not be cropped (shown on chocolate) */
+  fit?: 'cover' | 'contain'
+  /** slug of an in-site case study (/work/<slug>) */
+  caseStudy?: string
+  /** outbound link: live site, video, article */
+  href?: string
 }
 
 export type CaseStudy = {
@@ -50,16 +60,6 @@ export type CaseStudy = {
   cover?: MediaItem
   chapters: Chapter[]
   exhibit?: { caption: string; forms: CloudForm[] }
-}
-
-export type WorkEntry = {
-  title: string
-  /** what it was */
-  what: string
-  /** who it was for — omitted when self-initiated or not yet filled in */
-  client?: string
-  year: string
-  href?: string
 }
 
 export type Service = { title: string; body: string }

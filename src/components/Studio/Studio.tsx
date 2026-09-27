@@ -8,7 +8,7 @@ export default function Studio({ bio, collaborators }: Props) {
   const [first, ...rest] = bio
   return (
     <section className="studio grid section" id="studio" aria-label="Studio">
-      <SectionHead index="05" label="Studio" />
+      <SectionHead index="03" label="Studio" />
       <p className="studio__first">{first}</p>
       <div className="studio__rest">
         {rest.map((p) => (

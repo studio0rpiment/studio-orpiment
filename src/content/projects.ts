@@ -1,0 +1,120 @@
+import type { Project } from './types'
+
+const P = '/projects'
+
+/**
+ * All projects, in the order they appear in the opening slideshow and the
+ * work index. A project without an image appears in the index only.
+ */
+export const projects: Project[] = [
+  {
+    id: 'wayside',
+    title: 'wayside.at',
+    kind: 'AR development',
+    client: 'Andrew Kastner, with Capital Fringe',
+    year: '2025',
+    lines: ['For Andrew Kastner', 'Kenilworth Aquatic Gardens, DC'],
+    image: `${P}/wayside/mockup-phone.jpg`,
+    alt: 'A phone among the reeds showing lotus buds rendered as a point cloud in augmented reality.',
+    focus: '45% 50%',
+    caseStudy: 'wayside',
+    href: 'https://kenilworth.wayside.at',
+  },
+  {
+    id: 'decides',
+    title: 'DECIDE(S)',
+    kind: 'Web application',
+    year: '2026',
+    lines: ['Collaborative decisions for', 'multi-take audio production'],
+    image: `${P}/decides/night-mode.jpg`,
+    alt: 'DECIDE(S) in night mode: a song card beside an edit and two take cards, with waveform players, MUST and NEVER flags, and the players’ notes.',
+    focus: '36% 30%',
+    caseStudy: 'decides',
+    href: 'https://decides.app',
+  },
+  {
+    id: 'adventurous-guitar',
+    title: 'Adventurous Electric Guitar',
+    kind: 'Web, real-time 3D',
+    client: 'Adventurous Electric Guitar Festival',
+    year: '2025–26',
+    lines: ['Summit + festival website', 'REMLABS'],
+    image: `${P}/adventurous-guitar/stage.jpg`,
+    alt: 'A stage lit in blue with guitars and amplifiers, the festival website projected above.',
+    focus: '100% 50%',
+    href: 'https://adventurous-guitar-2026.vercel.app',
+  },
+  {
+    id: 'tied-to-the-land',
+    title: 'Tied To The Land',
+    kind: 'Exhibition',
+    year: '2025',
+    lines: ['Interactive exhibition map'],
+    image: `${P}/tied-to-the-land/installed.jpg`,
+    alt: 'A gallery with framed works on the walls and a touchscreen map table at the centre of the room.',
+    focus: '50% 60%',
+  },
+  {
+    id: 'song-cards',
+    title: 'Song Cards',
+    kind: 'Interactive listening objects',
+    year: 'In progress',
+    lines: ['Songs as ornamented cards'],
+    image: `${P}/song-cards/card.jpg`,
+    alt: 'A song card: an engraved photographic image inside an ornamented frame.',
+    fit: 'contain',
+  },
+  {
+    id: 'sites-for-artists',
+    title: 'Sites for artists',
+    kind: 'Websites + identities',
+    client: 'Ulrike Schwarz, The Twiolins, and others',
+    year: '2024–26',
+    lines: ['Websites and identities for', 'musicians and performers'],
+    image: `${P}/sites-for-artists/ulrike-schwarz.jpg`,
+    alt: 'The home page of Ulrike Schwarz’s website: a portrait with her saxophone beside her name.',
+    focus: '62% 40%',
+    href: 'https://ulrikeschwarzmusik.com',
+  },
+  {
+    id: 'earth-out-of-joint',
+    title: 'Earth Out of Joint',
+    kind: 'Video',
+    year: '2025',
+    lines: ['Video work'],
+    image: `${P}/earth-out-of-joint/still.jpg`,
+    alt: 'A still from Earth Out of Joint: fragments of the earth floating in black.',
+    focus: '40% 50%',
+  },
+  {
+    id: 'three-black-wall-streets',
+    title: 'Three Black Wall Streets',
+    kind: 'Web-based 3D',
+    client: 'Paul Rucker',
+    year: '2021',
+    lines: ['For Paul Rucker'],
+    image: `${P}/three-black-wall-streets/postcards.jpg`,
+    alt: 'Vintage postcards for Durham, Richmond and Tulsa arranged across the landing page of Three Black Wall Streets.',
+    focus: '50% 50%',
+  },
+  {
+    id: 'white-mob-violence',
+    title: 'White Mob Violence Map',
+    kind: 'Geospatial visualization',
+    year: '2021',
+    lines: ['Geospatial visualization'],
+    image: `${P}/white-mob-violence/map.jpg`,
+    alt: 'A map of the United States with incidents plotted as points.',
+    focus: '50% 50%',
+  },
+  {
+    id: 'cast-down-tither',
+    title: 'Cast Down Tither',
+    kind: 'Performance system',
+    year: '2017–',
+    lines: ['Performance system'],
+  },
+]
+
+/** projects with an image, in slideshow order */
+export const slideshow = projects.filter((p) => p.image)

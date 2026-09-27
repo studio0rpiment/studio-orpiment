@@ -1,4 +1,5 @@
 import { ReactNode } from 'react'
+import RouteLink from '../RouteLink/RouteLink'
 import './BlockRow.css'
 
 /**
@@ -19,11 +20,10 @@ type CellProps = {
 export function BlockCell({ kind, children, href, as: Tag = 'span' }: CellProps) {
   const cls = `block-cell block-cell--${kind}`
   if (href) {
-    const external = href.startsWith('http')
     return (
-      <a className={cls} href={href} {...(external ? { target: '_blank', rel: 'noreferrer' } : {})}>
+      <RouteLink className={cls} href={href}>
         {children}
-      </a>
+      </RouteLink>
     )
   }
   return <Tag className={cls}>{children}</Tag>

@@ -1,4 +1,14 @@
 .stage {
+  position: relative;
+  /* one screen of scroll per project */
+  height: calc(var(--steps) * 100svh);
+}
+.stage__steps { position: absolute; inset: 0; pointer-events: none; }
+.stage__step { height: 100svh; scroll-snap-align: start; scroll-snap-stop: always; }
+
+.stage__frame {
+  position: sticky;
+  top: 0;
   display: grid;
   grid-template-columns: minmax(0, 9fr) minmax(0, 11fr);
   height: 100vh;
@@ -45,10 +55,9 @@
 
 /* phone + narrow tablet: name, photograph, then the label row and disciplines */
 @media (max-width: 56rem) {
-  .stage {
+  .stage__frame {
     grid-template-columns: 1fr;
-    grid-template-rows: var(--corner) minmax(22rem, 68svh) auto;
-    height: auto;
+    grid-template-rows: var(--corner) minmax(0, 1fr) auto auto;
     min-height: 0;
   }
   .stage__panel { display: contents; }
@@ -59,12 +68,11 @@
     text-align: center;
   }
   .project-slider { grid-row: 2; }
-  .stage__blocks { grid-row: 3; margin: 2.5rem 0 0; }
+  .stage__blocks { grid-row: 3; margin: 1.5rem 0 0; }
   .stage__foot {
     grid-row: 4;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 1.5rem;
-    padding: 3rem var(--gutter) 0;
+    padding: 1.25rem var(--gutter) 1.5rem;
   }
+  .stage__disciplines { font-size: var(--step-2); flex-direction: row; flex-wrap: wrap; gap: 0 0.4em; }
+  .stage__lede { display: none; }
 }

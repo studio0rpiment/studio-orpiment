@@ -3,18 +3,22 @@ import Intro from './components/Intro/Intro'
 import CornerBlock from './components/CornerBlock/CornerBlock'
 import MenuOverlay from './components/MenuOverlay/MenuOverlay'
 import Stage from './components/Stage/Stage'
-import CaseStudy from './components/CaseStudy/CaseStudy'
+import CaseStudyPage from './components/CaseStudyPage/CaseStudyPage'
 import WorkIndex from './components/WorkIndex/WorkIndex'
 import Services from './components/Services/Services'
 import Studio from './components/Studio/Studio'
 import SiteFooter from './components/SiteFooter/SiteFooter'
 import { usePrefersReducedMotion } from './hooks/usePrefersReducedMotion'
+import { useRoute, useScrollOnRoute } from './hooks/useRoute'
 import { wayside } from './content/wayside'
 import { decides } from './content/decides'
-import { slides } from './content/slides'
-import { services, site, soundLine, studio, work } from './content/site'
+import { projects, slideshow } from './content/projects'
+import { services, site, soundLine, studio } from './content/site'
 
 const INTRO_SEEN = 'so:intro-seen'
+
+/** case studies, in order; each links on to the next */
+const studies = [wayside, decides]
 
 /** the intro plays once per browser session, and never with reduced motion */
 function introAlreadySeen(): boolean {
@@ -25,10 +29,25 @@ function introAlreadySeen(): boolean {
   }
 }
 
+function Home() {
+  return (
+    <main>
+      <Stage slides={slideshow} />
+      <div className="after-stage">
+        <WorkIndex projects={projects} index="01" />
+        <Services services={services} soundLine={soundLine} />
+        <Studio bio={studio.bio} collaborators={studio.collaborators} />
+      </div>
+    </main>
+  )
+}
+
 export default function App() {
   const reduced = usePrefersReducedMotion()
-  const [intro, setIntro] = useState(() => !introAlreadySeen())
+  const { path, hash } = useRoute()
+  const [intro, setIntro] = useState(() => !introAlreadySeen() && location.pathname === '/')
   const [menuOpen, setMenuOpen] = useState(false)
+  useScrollOnRoute(path, hash)
 
   const endIntro = useCallback(() => {
     setIntro(false)
@@ -39,9 +58,14 @@ export default function App() {
     }
   }, [])
 
+  const slug = path.startsWith('/work/') ? path.slice('/work/'.length).replace(/\/$/, '') : null
+  const at = slug ? studies.findIndex((s) => s.slug === slug) : -1
+  const study = at >= 0 ? studies[at] : null
+  const next = at >= 0 ? studies[(at + 1) % studies.length] : null
+
   return (
     <>
-      {intro && !reduced && <Intro words={site.introWords} onDone={endIntro} />}
+      {intro && !reduced && !study && <Intro words={site.introWords} onDone={endIntro} />}
 
       <CornerBlock
         side="left"
@@ -58,14 +82,15 @@ export default function App() {
       )}
       <MenuOverlay open={menuOpen} onClose={() => setMenuOpen(false)} />
 
-      <main>
-        <Stage slides={slides} />
-        <CaseStudy study={wayside} index="01" />
-        <CaseStudy study={decides} index="02" />
-        <WorkIndex entries={work} />
-        <Services services={services} soundLine={soundLine} />
-        <Studio bio={studio.bio} collaborators={studio.collaborators} />
-      </main>
+      {study ? (
+        <CaseStudyPage
+          study={study}
+          index={String(at + 1).padStart(2, '0')}
+          next={next && next !== study ? { slug: next.slug, title: next.title } : undefined}
+        />
+      ) : (
+        <Home />
+      )}
       <SiteFooter />
     </>
   )

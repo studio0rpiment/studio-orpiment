@@ -1,0 +1,3 @@
+.case-page__back { padding-top: calc(var(--corner) + 2rem); }
+.case-page__back .block-cell--title { font-size: var(--step-1); }
+.case-page .case-study.section { margin-top: clamp(3rem, 2rem + 3vw, 5rem); }

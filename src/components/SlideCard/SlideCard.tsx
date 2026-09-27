@@ -1,12 +1,20 @@
 import { CSSProperties } from 'react'
-import type { Slide } from '../../content/types'
+import RouteLink from '../RouteLink/RouteLink'
+import type { Project } from '../../content/types'
 import './SlideCard.css'
 
-type Props = { slide: Slide; index: number; count: number }
+type Props = { slide: Project; index: number; count: number }
+
+/** where the card leads: an in-site case study, else the project's own site, else its row in the index */
+function cardLink(p: Project): { href: string; label: string } {
+  if (p.caseStudy) return { href: `/work/${p.caseStudy}`, label: 'Case study' }
+  if (p.href) return { href: p.href, label: 'Discover ↗' }
+  return { href: `#work-${p.id}`, label: 'Discover' }
+}
 
 /** the paper card on the photograph: number, title, lines, and a link with a position line */
 export default function SlideCard({ slide, index, count }: Props) {
-  const external = slide.href.startsWith('http')
+  const link = cardLink(slide)
   return (
     <div className="slide-card" aria-live="polite">
       <div className="slide-card__body" key={slide.id}>
@@ -19,13 +27,9 @@ export default function SlideCard({ slide, index, count }: Props) {
         </div>
       </div>
       <p className="eyebrow slide-card__meta">{slide.kind} · {slide.year}</p>
-      <a
-        className="slide-card__more"
-        href={slide.href}
-        {...(external ? { target: '_blank', rel: 'noreferrer' } : {})}
-      >
-        {external ? 'Visit ↗' : 'Discover'}
-      </a>
+      <RouteLink className={`slide-card__more ${slide.caseStudy ? 'is-case' : ''}`} href={link.href}>
+        {link.label}
+      </RouteLink>
       <span
         className="slide-card__progress"
         style={{ '--p': (index + 1) / count } as CSSProperties}

@@ -1,5 +1,6 @@
 import { useEffect } from 'react'
 import { useKey } from '../../hooks/useKey'
+import RouteLink from '../RouteLink/RouteLink'
 import { nav, site } from '../../content/site'
 import './MenuOverlay.css'
 
@@ -18,10 +19,10 @@ export default function MenuOverlay({ open, onClose }: Props) {
     <div className={`menu-overlay ${open ? 'is-open' : ''}`} aria-hidden={!open} id="menu">
       <nav className="menu-overlay__nav" aria-label="Sections">
         {nav.map((l, i) => (
-          <a key={l.href} href={l.href} onClick={onClose} tabIndex={open ? 0 : -1}>
+          <RouteLink key={l.href} href={l.href} onClick={onClose} tabIndex={open ? 0 : -1}>
             <span className="menu-overlay__num">{String(i + 1).padStart(2, '0')}</span>
             <span className="display">{l.label}</span>
-          </a>
+          </RouteLink>
         ))}
       </nav>
       <div className="menu-overlay__foot">

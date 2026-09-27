@@ -20,7 +20,7 @@ export const decides: CaseStudy = {
       id: 'playback',
       title: 'Playback',
       body: 'Each take carries a waveform player; amplitude peaks are computed from the source audio and cached, and the waveform is the scrubber. Playback is single-channel: starting one take stops all others. Named sections are shared across takes for like-for-like comparison, and any take can detach into a floating, always-on-top card that stays above a DAW or notation software.',
-      media: [{ kind: 'image', src: `${M}/landing.jpg`, caption: 'decides.app, sign-in and description' }],
+      media: [{ kind: 'image', src: `${M}/night-mode.jpg`, caption: 'A song with an edit and two takes, night mode' }],
     },
     {
       id: 'evaluation',

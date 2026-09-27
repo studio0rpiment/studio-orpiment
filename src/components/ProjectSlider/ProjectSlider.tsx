@@ -2,11 +2,11 @@ import { AnimationEvent, CSSProperties } from 'react'
 import SlideCard from '../SlideCard/SlideCard'
 import SlideNav from '../SlideNav/SlideNav'
 import { useKey } from '../../hooks/useKey'
-import type { Slide } from '../../content/types'
+import type { Project } from '../../content/types'
 import './ProjectSlider.css'
 
 type Props = {
-  slides: Slide[]
+  slides: Project[]
   index: number
   previous: number | null
   direction: 1 | -1
@@ -38,12 +38,12 @@ export default function ProjectSlider({ slides, index, previous, direction, onPr
         return (
           <div
             key={s.id}
-            className={`project-slider__photo is-${state}`}
+            className={`project-slider__photo is-${state} ${s.fit === 'contain' ? 'is-contain' : ''}`}
             onAnimationEnd={state === 'entering' ? onRevealEnd : undefined}
           >
             <img
               src={s.image}
-              alt={i === index ? s.alt : ''}
+              alt={i === index ? s.alt ?? '' : ''}
               style={{ objectPosition: s.focus ?? '50% 50%' } as CSSProperties}
               decoding="async"
             />
