@@ -4,8 +4,6 @@ export const site = {
   name: 'Studio Orpiment',
   /** stacked words, lower left of the opening stage, when a project has none of its own */
   disciplines: ['Augmented', 'Real-time', 'Web'],
-  /** words the intro steps through before the stage opens */
-  introWords: ['Augmented', 'Real-time', 'Web', 'Orpiment'],
   /** the studio's one line, under its name at the top of the stage */
   lede: 'Bespoke applications, browser-based augmented reality, collaborative interactive systems, and websites for artists, festivals, and cultural institutions.',
   /**
