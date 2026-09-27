@@ -57,7 +57,7 @@ export default function Stage({ slides }: { slides: Project[] }) {
 
       <div className="stage__frame" data-tone={slides[index]?.tone ?? 'paper'}>
         <div className="stage__panel">
-          <h1 className="display stage__name">{site.name}</h1>
+          <h1 className="display stage__name tone-text">{site.name}</h1>
 
           <BlockRow className="stage__blocks">
             <BlockCell kind="index">
@@ -69,12 +69,12 @@ export default function Stage({ slides }: { slides: Project[] }) {
           </BlockRow>
 
           <div className="stage__foot">
-            <p className="display stage__disciplines">
+            <p className="display stage__disciplines tone-text">
               {site.disciplines.map((d) => (
                 <span key={d}>{d}</span>
               ))}
             </p>
-            <p className="stage__lede">{site.lede}</p>
+            <p className="stage__lede tone-text">{site.lede}</p>
           </div>
         </div>
 

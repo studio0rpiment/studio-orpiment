@@ -27,7 +27,7 @@ export type CloudForm = { id: string; label: string; src: string }
  * the stage's colour for a slide: paper, orpiment, or chocolate; or a
  * project's own palette (defined in styles/tones.css)
  */
-export type Tone = 'paper' | 'orpiment' | 'ink' | 'aegf'
+export type Tone = 'paper' | 'orpiment' | 'ink' | 'aegf' | 'ulrike' | 'earth' | 'tttl' | 'wmv'
 
 /**
  * A project: one record feeds the opening slideshow (when it has an image)

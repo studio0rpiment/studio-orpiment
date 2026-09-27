@@ -18,7 +18,7 @@ type CellProps = {
 }
 
 export function BlockCell({ kind, children, href, as: Tag = 'span' }: CellProps) {
-  const cls = `block-cell block-cell--${kind}`
+  const cls = `block-cell block-cell--${kind}${kind === 'title' ? ' tone-text' : ''}`
   if (href) {
     return (
       <RouteLink className={cls} href={href}>

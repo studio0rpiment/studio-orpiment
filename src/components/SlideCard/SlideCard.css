@@ -2,16 +2,18 @@
   position: relative;
   flex: 1 1 auto;
   max-width: 44rem;
-  /* fixed height so the card holds still while its text changes */
-  height: clamp(10.5rem, 8rem + 5vw, 13.5rem);
+  /* a steady minimum so the card mostly holds still while its text changes;
+     it grows only when a title and its lines need more room */
+  min-height: clamp(10.5rem, 8rem + 5vw, 13.5rem);
   background: var(--color-bg);
   color: var(--color-ink);
-  padding: 1rem 1.5rem 2.25rem;
+  padding: 1rem 1.5rem 3rem;
 }
 .slide-card__body {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr);
-  column-gap: 1.25rem;
+  /* the number takes only its width; the title gets the rest (the mono face runs wide) */
+  grid-template-columns: auto minmax(0, 1fr);
+  column-gap: 1.5rem;
   animation: slide-card-in var(--t-med) var(--ease-out) both;
 }
 .slide-card__num {
@@ -21,10 +23,13 @@
   align-self: start;
 }
 .slide-card__title { padding-top: clamp(1rem, 0.5rem + 1.2vw, 1.75rem); }
-.slide-card__title h2,
-.slide-card__line {
+.slide-card__title h2 {
   font-size: clamp(1.25rem, 0.9rem + 0.9vw, 1.875rem);
   line-height: 1.08;
+}
+.slide-card__line {
+  font-size: clamp(1rem, 0.8rem + 0.6vw, 1.375rem);
+  line-height: 1.15;
 }
 .slide-card__line { color: var(--color-ink-soft); }
 .slide-card__meta {
@@ -48,7 +53,7 @@
   bottom: 0.6rem;
   padding: 0.3rem 0.6rem;
   margin-left: -0.6rem;
-  background: var(--color-block);
+  background: var(--tone-texture, none) fixed var(--color-block);
   color: var(--color-on-block);
 }
 .slide-card__more.is-case:hover { background: var(--color-on-block); color: var(--color-block); }
@@ -60,7 +65,7 @@
   bottom: 0;
   height: 0.25rem;
   width: calc(var(--p) * 100%);
-  background: var(--color-block);
+  background: var(--tone-texture, none) fixed var(--color-block);
   transition: width var(--t-slow) var(--ease-in-out), background-color 750ms var(--ease-in-out);
 }
 
@@ -74,7 +79,9 @@
   .slide-card__body { grid-template-columns: auto 1fr; }
   .slide-card__num { font-size: var(--step-2); }
   .slide-card__title { padding-top: 0; }
-  .slide-card__title h2, .slide-card__line { font-size: var(--step-1); }
+  .slide-card__title h2 { font-size: var(--step-1); }
+  /* the mono face runs wide: the supporting lines step down so the card stays compact */
+  .slide-card__line { font-size: var(--step-0); }
   .slide-card__more { left: 1rem; }
   .slide-card__meta { display: none; }
 }

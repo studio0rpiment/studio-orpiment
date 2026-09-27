@@ -28,7 +28,7 @@
   height: var(--band);
   gap: 0.5em;
   padding: 0 0.75rem 0 var(--gutter);
-  background: var(--color-block);
+  background: var(--tone-texture, none) fixed var(--color-block);
   color: var(--color-on-block);
   font-family: var(--font-text);
   font-size: var(--step--2);
@@ -57,7 +57,7 @@
   align-self: flex-start;
   height: var(--band);
   padding: 0 clamp(1.5rem, 1rem + 2vw, 3rem);
-  background: var(--color-block);
+  background: var(--tone-texture, none) fixed var(--color-block);
   color: var(--color-on-block);
   font-family: var(--font-text);
   font-size: var(--step--2);

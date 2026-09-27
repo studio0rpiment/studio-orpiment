@@ -35,6 +35,66 @@
   --color-on-block: hsl(var(--aegf-blue));
 }
 
+/* project palette: Ulrike Schwarz — saxophone silver ground, charcoal type, bands, and lines */
+:root {
+  --ulrike-silver: 52 15.2% 80.6%;
+  --ulrike-charcoal: 60 4.5% 8.6%;
+}
+[data-tone='ulrike'] {
+  --color-bg: hsl(var(--ulrike-silver));
+  --color-ink: hsl(var(--ulrike-charcoal));
+  --color-ink-soft: hsl(var(--ulrike-charcoal) / 0.68);
+  --color-rule: hsl(var(--ulrike-charcoal) / 0.22);
+  --color-block: hsl(var(--ulrike-charcoal));
+  --color-on-block: hsl(var(--ulrike-silver));
+}
+
+/* project palette: Earth Out of Joint — black ground; type and bands cut from a
+   tile of the video itself (lines use the tile's average colour) */
+:root {
+  --earth-black: 0 0% 0%;
+  --earth-blue: 225.4 71.9% 65.2%;
+  --earth-texture: url('/textures/earth-out-of-joint.png');
+}
+[data-tone='earth'] {
+  --color-bg: hsl(var(--earth-black));
+  --color-ink: hsl(var(--earth-blue));
+  --color-ink-soft: hsl(var(--earth-blue) / 0.72);
+  --color-rule: hsl(var(--earth-blue) / 0.3);
+  --color-block: hsl(var(--earth-blue));
+  --color-on-block: hsl(var(--earth-black));
+  --tone-texture: var(--earth-texture);
+  --tone-text-fill: transparent;
+}
+
+/* project palette: Tied To The Land — gallery-wall cream ground; type, bands, and lines in the museum's parquet */
+:root {
+  --tttl-cream: 33.3 11.4% 69%;
+  --tttl-parquet: 34.3 32.3% 38.2%;
+}
+[data-tone='tttl'] {
+  --color-bg: hsl(var(--tttl-cream));
+  --color-ink: hsl(var(--tttl-parquet));
+  --color-ink-soft: hsl(var(--tttl-parquet) / 0.8);
+  --color-rule: hsl(var(--tttl-parquet) / 0.3);
+  --color-block: hsl(var(--tttl-parquet));
+  --color-on-block: hsl(var(--tttl-cream));
+}
+
+/* project palette: White Mob Violence Map — the map's charcoal ground, its incident-dot red for type, bands, and lines */
+:root {
+  --wmv-charcoal: 150 3.8% 10.2%;
+  --wmv-red: 6.7 64.5% 51.4%;
+}
+[data-tone='wmv'] {
+  --color-bg: hsl(var(--wmv-charcoal));
+  --color-ink: hsl(var(--wmv-red));
+  --color-ink-soft: hsl(var(--wmv-red) / 0.75);
+  --color-rule: hsl(var(--wmv-red) / 0.3);
+  --color-block: hsl(var(--wmv-red));
+  --color-on-block: hsl(var(--wmv-charcoal));
+}
+
 [data-tone] {
   background: var(--color-bg);
   color: var(--color-ink);
@@ -46,4 +106,35 @@
   --color-block: hsl(var(--aegf-red));
   --color-on-block: hsl(var(--aegf-blue));
 }
+:root:has(.stage__frame[data-tone='earth']) .corner-block {
+  --color-block: hsl(var(--earth-blue));
+  --color-on-block: hsl(var(--earth-black));
+  --tone-texture: var(--earth-texture);
+}
+:root:has(.stage__frame[data-tone='tttl']) .corner-block {
+  --color-block: hsl(var(--tttl-parquet));
+  --color-on-block: hsl(var(--tttl-cream));
+}
+:root:has(.stage__frame[data-tone='wmv']) .corner-block {
+  --color-block: hsl(var(--wmv-red));
+  --color-on-block: hsl(var(--wmv-charcoal));
+}
+:root:has(.stage__frame[data-tone='ulrike']) .corner-block {
+  --color-block: hsl(var(--ulrike-charcoal));
+  --color-on-block: hsl(var(--ulrike-silver));
+}
 .corner-block { transition: background-color 750ms var(--ease-in-out), color 750ms var(--ease-in-out); }
+
+/*
+ * Type that can carry a tone's texture: when a tone sets --tone-texture and
+ * --tone-text-fill: transparent, the letters show the texture; otherwise
+ * this does nothing and the type is plain colour. Bands use the same
+ * texture as their fill (see the band rules in each component).
+ */
+.tone-text {
+  background-image: var(--tone-texture, none);
+  background-attachment: fixed;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: var(--tone-text-fill, currentColor);
+}

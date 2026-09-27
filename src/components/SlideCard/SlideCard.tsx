@@ -18,16 +18,16 @@ export default function SlideCard({ slide, index, count }: Props) {
   return (
     <div className="slide-card" aria-live="polite">
       <div className="slide-card__body" key={slide.id}>
-        <p className="display slide-card__num">N°{String(index + 1).padStart(3, '0')}</p>
-        <div className="slide-card__title">
+        <p className="display slide-card__num tone-text">N°{String(index + 1).padStart(3, '0')}</p>
+        <div className="slide-card__title tone-text">
           <h2 className="display">{slide.title}</h2>
           {slide.lines.map((l) => (
             <p className="display slide-card__line" key={l}>{l}</p>
           ))}
         </div>
       </div>
-      <p className="eyebrow slide-card__meta">{slide.kind} · {slide.year}</p>
-      <RouteLink className={`slide-card__more ${slide.caseStudy ? 'is-case' : ''}`} href={link.href}>
+      <p className="eyebrow slide-card__meta tone-text">{slide.kind} · {slide.year}</p>
+      <RouteLink className={`slide-card__more ${slide.caseStudy ? 'is-case' : 'tone-text'}`} href={link.href}>
         {link.label}
       </RouteLink>
       <span

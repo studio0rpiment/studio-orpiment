@@ -6,7 +6,7 @@
   height: var(--corner);
   display: grid;
   place-items: center;
-  background: var(--color-block);
+  background: var(--tone-texture, none) fixed var(--color-block);
   color: var(--color-on-block);
   border: 0;
   padding: 0;
