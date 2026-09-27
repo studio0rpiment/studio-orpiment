@@ -6,7 +6,7 @@ import { useSlider } from '../../hooks/useSlider'
 import { useScrollSteps } from '../../hooks/useScrollSteps'
 import { navigate } from '../../hooks/useRoute'
 import { site } from '../../content/site'
-import type { Project } from '../../content/types'
+import type { Project, Tone } from '../../content/types'
 import './Stage.css'
 
 /**
@@ -20,7 +20,15 @@ import './Stage.css'
  * the slideshow paused on it, and the study scrolling in underneath. Prev/next
  * then leave the study for the neighbouring slide.
  */
-export default function Stage({ slides, hold }: { slides: Project[]; hold?: string }) {
+type Props = {
+  slides: Project[]
+  /** a project to hold on while its case study is open */
+  hold?: string
+  /** told whenever the palette on screen changes (the menu and corners follow it) */
+  onTone?: (tone: Tone) => void
+}
+
+export default function Stage({ slides, hold, onTone }: Props) {
   const ref = useRef<HTMLElement>(null)
   const onScreen = useInView(ref, { threshold: 0.1 })
   const held = hold ? slides.findIndex((s) => s.id === hold) : -1
@@ -38,10 +46,17 @@ export default function Stage({ slides, hold }: { slides: Project[]; hold?: stri
   // scroll position → slide. The slideshow walks toward the scrolled-to step
   // one project at a time; each move waits for the previous reveal's
   // animationend (previous === null), so no image is cut off mid-reveal.
+  // A swipe moves one step, so neighbouring steps walk one reveal at a time.
+  // A long jump (arriving from below the slideshow, or from a link) goes
+  // straight to its slide in one reveal instead of running through the set.
   useEffect(() => {
     if (holding || previous !== null || step === index) return
-    go(index + Math.sign(step - index))
+    go(Math.abs(step - index) > 1 ? step : index + Math.sign(step - index))
   }, [holding, step, index, previous, go])
+
+  const shown = slides[index]
+  const tone = shown?.tone ?? 'paper'
+  useEffect(() => { onTone?.(tone) }, [tone, onTone])
 
   const scrollToStep = useCallback((i: number) => {
     if (holding) {
@@ -75,9 +90,13 @@ export default function Stage({ slides, hold }: { slides: Project[]; hold?: stri
         })}
       </div>
 
-      <div className="stage__frame" data-tone={slides[index]?.tone ?? 'paper'}>
+      <div className="stage__frame" data-tone={tone}>
         <div className="stage__panel">
-          <h1 className="display stage__name tone-text">{site.name}</h1>
+          {/* a full load, not an in-site link: the dice are rolled again */}
+          <h1 className="display stage__name tone-text">
+            <a href="/">{site.name}</a>
+          </h1>
+          <p className="stage__intro tone-text">{site.lede}</p>
 
           <BlockRow className="stage__blocks">
             <BlockCell kind="index">
@@ -88,13 +107,14 @@ export default function Stage({ slides, hold }: { slides: Project[]; hold?: stri
             <BlockCell kind="action" href="/#work">All projects</BlockCell>
           </BlockRow>
 
-          <div className="stage__foot">
+          {/* the project's own words, changing with the slide */}
+          <div className="stage__foot" key={shown?.id}>
             <p className="display stage__disciplines tone-text">
-              {site.disciplines.map((d) => (
+              {(shown?.disciplines ?? site.disciplines).map((d) => (
                 <span key={d}>{d}</span>
               ))}
             </p>
-            <p className="stage__lede tone-text">{site.lede}</p>
+            {shown?.about && <p className="stage__lede tone-text">{shown.about}</p>}
           </div>
         </div>
 

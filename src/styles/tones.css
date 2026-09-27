@@ -144,41 +144,9 @@
   color: var(--color-ink);
 }
 
-/* the fixed Menu / Write squares sit outside the stage, so they are told
-   the stage's palette while a project palette is up */
-:root:has(.stage__frame[data-tone='aegf']) .corner-block {
-  --color-block: hsl(var(--aegf-red));
-  --color-on-block: hsl(var(--aegf-blue));
-}
-:root:has(.stage__frame[data-tone='earth']) .corner-block {
-  --color-block: hsl(var(--earth-blue));
-  --color-on-block: hsl(var(--earth-black));
-  --tone-texture: var(--earth-texture);
-}
-:root:has(.stage__frame[data-tone='tttl']) .corner-block {
-  --color-block: hsl(var(--tttl-parquet));
-  --color-on-block: hsl(var(--tttl-cream));
-}
-:root:has(.stage__frame[data-tone='wmv']) .corner-block {
-  --color-block: hsl(var(--wmv-red));
-  --color-on-block: hsl(var(--wmv-charcoal));
-}
-:root:has(.stage__frame[data-tone='wayside']) .corner-block {
-  --color-block: hsl(var(--wayside-red));
-  --color-on-block: hsl(var(--chocolate));
-}
-:root:has(.stage__frame[data-tone='decides']) .corner-block {
-  --color-block: hsl(var(--decides-cream));
-  --color-on-block: hsl(var(--decides-ochre));
-}
-:root:has(.stage__frame[data-tone='tbws']) .corner-block {
-  --color-block: hsl(var(--chocolate));
-  --color-on-block: hsl(var(--tbws-paper));
-}
-:root:has(.stage__frame[data-tone='ulrike']) .corner-block {
-  --color-block: hsl(var(--ulrike-charcoal));
-  --color-on-block: hsl(var(--ulrike-silver));
-}
+/* the menu and corner squares wear the palette on screen: the wrapper only
+   carries the tokens (it draws nothing itself) */
+.site-chrome[data-tone] { display: contents; }
 .corner-block { transition: background-color 750ms var(--ease-in-out), color 750ms var(--ease-in-out); }
 
 /*

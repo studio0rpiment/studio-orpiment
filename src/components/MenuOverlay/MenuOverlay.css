@@ -5,8 +5,9 @@
   display: grid;
   grid-template-rows: 1fr auto;
   padding: calc(var(--corner) + 2rem) var(--inset) 2rem;
-  background: var(--color-menu);
-  color: var(--color-on-menu);
+  /* the palette on screen */
+  background: var(--tone-ground, none) center / var(--tone-ground-size, auto) fixed var(--color-bg);
+  color: var(--color-ink);
   clip-path: inset(0 100% 0 0);
   visibility: hidden;
   transition: clip-path var(--t-med) var(--ease-in-out), visibility 0s linear var(--t-med);
@@ -22,20 +23,20 @@
   align-items: baseline;
   gap: 1.5rem;
   padding: 0.6rem 0;
-  border-top: 1px solid var(--color-menu-rule);
+  border-top: 1px solid var(--color-rule);
   text-decoration: none;
   font-size: var(--step-4);
 }
-.menu-overlay__nav a:last-child { border-bottom: 1px solid var(--color-menu-rule); }
-.menu-overlay__nav a:hover { color: var(--color-bg); }
-.menu-overlay__num { font-size: var(--step--2); letter-spacing: 0.08em; color: var(--color-on-menu-soft); min-width: 2.5em; }
+.menu-overlay__nav a:last-child { border-bottom: 1px solid var(--color-rule); }
+.menu-overlay__nav a:hover { color: var(--color-ink-soft); }
+.menu-overlay__num { font-size: var(--step--2); letter-spacing: 0.08em; color: var(--color-ink-soft); min-width: 2.5em; }
 .menu-overlay__foot {
   display: flex;
   flex-wrap: wrap;
   gap: 0.5rem 2.5rem;
   font-size: var(--step--1);
-  color: var(--color-on-menu-soft);
+  color: var(--color-ink-soft);
 }
 .menu-overlay__foot a { text-decoration: none; }
-.menu-overlay__foot a:hover { color: var(--color-bg); }
+.menu-overlay__foot a:hover { color: var(--color-ink); }
 @media (prefers-reduced-motion: reduce) { .menu-overlay { transition: none; } }

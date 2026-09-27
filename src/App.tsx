@@ -11,9 +11,9 @@ import { useRoute, useScrollOnRoute } from './hooks/useRoute'
 import { wayside } from './content/wayside'
 import { decides } from './content/decides'
 import { projects, slideshow } from './content/projects'
-import { services, site, soundLine, studio } from './content/site'
+import { services, soundLine, studio } from './content/site'
 import { shuffleAfterFirst } from './lib/shuffle'
-import type { CaseStudy } from './content/types'
+import type { CaseStudy, Tone } from './content/types'
 
 /**
  * The dice are rolled once per page load: Wayside always opens, the rest
@@ -29,11 +29,11 @@ const studies = [wayside, decides]
  * slide, held at the top, and the study beneath it, in the slide's colours;
  * Exit returns to the slideshow on that slide.
  */
-function Home({ study }: { study: CaseStudy | null }) {
+function Home({ study, onTone }: { study: CaseStudy | null; onTone: (tone: Tone) => void }) {
   const project = study ? slideOrder.find((p) => p.caseStudy === study.slug) : undefined
   return (
     <main>
-      <Stage slides={slideOrder} hold={project?.id} />
+      <Stage slides={slideOrder} hold={project?.id} onTone={onTone} />
       {study ? (
         <CaseStudyPanel study={study} tone={project?.tone} exitHref={project ? `/#slide-${project.id}` : '/'} />
       ) : (
@@ -52,6 +52,8 @@ function Home({ study }: { study: CaseStudy | null }) {
 export default function App() {
   const { path, hash } = useRoute()
   const [menuOpen, setMenuOpen] = useState(false)
+  // the palette on screen; the menu and the corner squares wear it too
+  const [screenTone, setScreenTone] = useState<Tone>(slideOrder[0]?.tone ?? 'paper')
   useScrollOnRoute(path, hash)
 
   const slug = path.startsWith('/work/') ? path.slice('/work/'.length).replace(/\/$/, '') : null
@@ -60,22 +62,22 @@ export default function App() {
 
   return (
     <>
-      <CornerBlock
-        side="left"
-        onClick={() => setMenuOpen((o) => !o)}
-        expanded={menuOpen}
-        label={menuOpen ? 'Close menu' : 'Open menu'}
-      >
-        {menuOpen ? 'Close' : 'Menu'}
-      </CornerBlock>
-      {site.email && (
-        <CornerBlock side="right" href={`mailto:${site.email}`} label={`Write to ${site.email}`}>
-          Write
+      <div className="site-chrome" data-tone={screenTone}>
+        <CornerBlock
+          side="left"
+          onClick={() => setMenuOpen((o) => !o)}
+          expanded={menuOpen}
+          label={menuOpen ? 'Close menu' : 'Open menu'}
+        >
+          {menuOpen ? 'Close' : 'Menu'}
         </CornerBlock>
-      )}
-      <MenuOverlay open={menuOpen} onClose={() => setMenuOpen(false)} />
+        <CornerBlock side="right" href="/#contact" label="Connect: contact details">
+          Connect
+        </CornerBlock>
+        <MenuOverlay open={menuOpen} onClose={() => setMenuOpen(false)} />
+      </div>
 
-      <Home study={study} />
+      <Home study={study} onTone={setScreenTone} />
     </>
   )
 }

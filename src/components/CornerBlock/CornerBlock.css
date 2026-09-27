@@ -19,3 +19,7 @@
 .corner-block--left { left: 0; }
 .corner-block--right { right: 0; }
 .corner-block:hover { background: var(--color-on-block); color: var(--color-block); }
+/* phone: the squares are small, so the longer label (Connect) sets tighter */
+@media (max-width: 40rem) {
+  .corner-block { font-size: 0.625rem; letter-spacing: 0.02em; }
+}

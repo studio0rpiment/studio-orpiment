@@ -1,4 +1,5 @@
 import { ReactNode } from 'react'
+import RouteLink from '../RouteLink/RouteLink'
 import './CornerBlock.css'
 
 type Props = {
@@ -10,14 +11,14 @@ type Props = {
   expanded?: boolean
 }
 
-/** a fixed square in a top corner of the viewport — Menu on the left, Write on the right */
+/** a fixed square in a top corner of the viewport — Menu on the left, Connect on the right */
 export default function CornerBlock({ side, children, label, href, onClick, expanded }: Props) {
   const cls = `corner-block corner-block--${side}`
   if (href) {
     return (
-      <a className={cls} href={href} aria-label={label}>
+      <RouteLink className={cls} href={href} aria-label={label}>
         {children}
-      </a>
+      </RouteLink>
     )
   }
   return (

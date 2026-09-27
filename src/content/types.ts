@@ -43,6 +43,10 @@ export type Project = {
   year: string
   /** short descriptive lines on the slideshow card */
   lines: string[]
+  /** the stacked words, lower left of the stage, while this project is up */
+  disciplines?: string[]
+  /** one or two sentences beside those words */
+  about?: string
   image?: string
   alt?: string
   /** object-position for the photograph's crop */

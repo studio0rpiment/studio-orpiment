@@ -21,7 +21,7 @@ export default function MenuOverlay({ open, onClose }: Props) {
         {nav.map((l, i) => (
           <RouteLink key={l.href} href={l.href} onClick={onClose} tabIndex={open ? 0 : -1}>
             <span className="menu-overlay__num">{String(i + 1).padStart(2, '0')}</span>
-            <span className="display">{l.label}</span>
+            <span className="display tone-text">{l.label}</span>
           </RouteLink>
         ))}
       </nav>

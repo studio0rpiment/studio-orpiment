@@ -40,15 +40,30 @@
   align-self: center;
   padding-left: calc(var(--corner));
   font-size: clamp(1.5rem, 1.1rem + 1.2vw, 2.25rem);
+  font-weight: 900;  /* NaN Gothic UI Mono Black */
   letter-spacing: var(--display-tracking);
+}
+.stage__name a { text-decoration: none; }
+/* the studio's one line, under its name */
+.stage__intro {
+  grid-row: 2;
+  align-self: start;
+  margin: 0.5rem 0 0;
+  padding-left: var(--corner);
+  max-width: 44ch;
+  font-size: var(--step--1);
+  line-height: 1.5;
+  color: var(--color-ink-soft);
 }
 .stage__blocks { grid-row: 3; }
 .stage__foot {
   grid-row: 5;
+  animation: stage-foot-in var(--t-med) var(--ease-out) both;
+  /* the project's words, then its sentence beneath them */
   display: flex;
-  align-items: flex-end;
-  justify-content: space-between;
-  gap: 2rem;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1.25rem;
   padding-left: var(--corner);
 }
 .stage__disciplines {
@@ -59,10 +74,15 @@
 }
 .stage__lede {
   margin: 0;
-  max-width: 24ch;
+  max-width: 46ch;
   font-size: var(--step--1);
   line-height: 1.5;
   color: var(--color-ink-soft);
+}
+
+@keyframes stage-foot-in {
+  from { opacity: 0; transform: translateY(0.5rem); }
+  to   { opacity: 1; transform: none; }
 }
 
 /* phone + narrow tablet: name, photograph, then the label row and disciplines */
@@ -86,5 +106,5 @@
     padding: 1.25rem var(--gutter) 1.5rem;
   }
   .stage__disciplines { font-size: var(--step-2); flex-direction: row; flex-wrap: wrap; gap: 0 0.4em; }
-  .stage__lede { display: none; }
+  .stage__lede, .stage__intro { display: none; }
 }
