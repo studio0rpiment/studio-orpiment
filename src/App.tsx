@@ -1,5 +1,4 @@
-import { useCallback, useState } from 'react'
-import Intro from './components/Intro/Intro'
+import { useState } from 'react'
 import CornerBlock from './components/CornerBlock/CornerBlock'
 import MenuOverlay from './components/MenuOverlay/MenuOverlay'
 import Stage from './components/Stage/Stage'
@@ -8,7 +7,6 @@ import WorkIndex from './components/WorkIndex/WorkIndex'
 import Services from './components/Services/Services'
 import Studio from './components/Studio/Studio'
 import SiteFooter from './components/SiteFooter/SiteFooter'
-import { usePrefersReducedMotion } from './hooks/usePrefersReducedMotion'
 import { useRoute, useScrollOnRoute } from './hooks/useRoute'
 import { wayside } from './content/wayside'
 import { decides } from './content/decides'
@@ -16,8 +14,6 @@ import { projects, slideshow } from './content/projects'
 import { services, site, soundLine, studio } from './content/site'
 import { shuffleAfterFirst } from './lib/shuffle'
 import type { CaseStudy } from './content/types'
-
-const INTRO_SEEN = 'so:intro-seen'
 
 /**
  * The dice are rolled once per page load: Wayside always opens, the rest
@@ -27,15 +23,6 @@ const slideOrder = shuffleAfterFirst(slideshow)
 
 /** the in-site case studies, by slug */
 const studies = [wayside, decides]
-
-/** the intro plays once per browser session, and never with reduced motion */
-function introAlreadySeen(): boolean {
-  try {
-    return sessionStorage.getItem(INTRO_SEEN) === '1'
-  } catch {
-    return false
-  }
-}
 
 /**
  * The home page. With a case study open (/work/<slug>) the page is just its
@@ -63,20 +50,9 @@ function Home({ study }: { study: CaseStudy | null }) {
 }
 
 export default function App() {
-  const reduced = usePrefersReducedMotion()
   const { path, hash } = useRoute()
-  const [intro, setIntro] = useState(() => !introAlreadySeen() && location.pathname === '/')
   const [menuOpen, setMenuOpen] = useState(false)
   useScrollOnRoute(path, hash)
-
-  const endIntro = useCallback(() => {
-    setIntro(false)
-    try {
-      sessionStorage.setItem(INTRO_SEEN, '1')
-    } catch {
-      /* storage unavailable — the intro will simply play again */
-    }
-  }, [])
 
   const slug = path.startsWith('/work/') ? path.slice('/work/'.length).replace(/\/$/, '') : null
   const at = slug ? studies.findIndex((s) => s.slug === slug) : -1
@@ -84,8 +60,6 @@ export default function App() {
 
   return (
     <>
-      {intro && !reduced && !study && <Intro words={site.introWords} onDone={endIntro} />}
-
       <CornerBlock
         side="left"
         onClick={() => setMenuOpen((o) => !o)}
