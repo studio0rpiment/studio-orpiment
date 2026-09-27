@@ -1,27 +1,32 @@
 /* Studio Orpiment — design tokens */
 :root {
-  --color-bg: #F5F4ED;        /* paper */
-  --color-ink: #2B1810;       /* chocolate — blocks, type */
-  --color-orpiment: #EEBD34;
-  --color-ink-soft: rgb(43 24 16 / 0.6);
-  --color-rule: rgb(43 24 16 / 0.16);
+  /* palette, as HSL channels so every tint is the same colour at another alpha */
+  --paper: 52.5 28.6% 94.5%;
+  --chocolate: 17.8 45.8% 11.6%;
+  --orpiment: 44.2 84.5% 56.9%;
+
+  --color-bg: hsl(var(--paper));
+  --color-ink: hsl(var(--chocolate));       /* blocks, type */
+  --color-orpiment: hsl(var(--orpiment));
+  --color-ink-soft: hsl(var(--chocolate) / 0.6);
+  --color-rule: hsl(var(--chocolate) / 0.16);
   /* solid blocks (corners, label rows, intro, footer): orpiment with chocolate type */
   --color-block: var(--color-orpiment);
   --color-on-block: var(--color-ink);
-  --color-on-block-soft: rgb(43 24 16 / 0.62);
-  --color-block-rule: rgb(43 24 16 / 0.2);
+  --color-on-block-soft: hsl(var(--chocolate) / 0.62);
+  --color-block-rule: hsl(var(--chocolate) / 0.2);
 
   /* the menu inverts it: chocolate with orpiment type */
   --color-menu: var(--color-ink);
   --color-on-menu: var(--color-orpiment);
-  --color-on-menu-soft: rgb(238 189 52 / 0.6);
-  --color-menu-rule: rgb(238 189 52 / 0.2);
+  --color-on-menu-soft: hsl(var(--orpiment) / 0.6);
+  --color-menu-rule: hsl(var(--orpiment) / 0.2);
 
-  /* titles: a plain European grotesk from the system; all running text: Rotor */
-  --font-display: 'Helvetica Neue', Helvetica, 'Futura', Arial, sans-serif;
+  /* titles and numbers: NaN Gothic UI Mono; all running text: Rotor */
+  --font-display: 'NaN Gothic UI Mono', ui-monospace, monospace;
   --font-text: 'Rotor Overlay', ui-monospace, monospace;
-  --display-weight: 500;
-  --display-tracking: -0.035em;
+  --display-weight: 400;          /* Regular; 800 ExtraBold and 900 Black are loaded too */
+  --display-tracking: -0.02em;
   --font-logo: 'Monstera', var(--font-display);
 
   /* type scale (rem) */

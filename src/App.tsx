@@ -33,7 +33,7 @@ function Home() {
   return (
     <main>
       <Stage slides={slideshow} />
-      <div className="after-stage">
+      <div className="after-stage" data-tone="ink">
         <WorkIndex projects={projects} index="01" />
         <Services services={services} soundLine={soundLine} />
         <Studio bio={studio.bio} collaborators={studio.collaborators} />

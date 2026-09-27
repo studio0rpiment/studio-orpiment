@@ -24,6 +24,12 @@ export type Fact = { label: string; value: string }
 export type CloudForm = { id: string; label: string; src: string }
 
 /**
+ * the stage's colour for a slide: paper, orpiment, or chocolate; or a
+ * project's own palette (defined in styles/tones.css)
+ */
+export type Tone = 'paper' | 'orpiment' | 'ink' | 'aegf'
+
+/**
  * A project: one record feeds the opening slideshow (when it has an image)
  * and the work index.
  */
@@ -43,6 +49,12 @@ export type Project = {
   focus?: string
   /** 'contain' for artwork that must not be cropped (shown on chocolate) */
   fit?: 'cover' | 'contain'
+  /**
+   * the stage colour while this photograph is up, matched to the picture:
+   * orpiment when warm yellows lead its colour, else paper or chocolate by
+   * which is closer to its dominant tone
+   */
+  tone?: Tone
   /** slug of an in-site case study (/work/<slug>) */
   caseStudy?: string
   /** outbound link: live site, video, article */

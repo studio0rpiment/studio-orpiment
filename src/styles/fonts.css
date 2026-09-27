@@ -1,5 +1,27 @@
-/* Self-hosted faces — no external font requests.
-   Display type uses the system grotesk stack (see tokens.css). */
+/* Self-hosted faces — no external font requests. */
+
+/* Display: titles, numbers, everything that is not Rotor text. One family, three weights. */
+@font-face {
+  font-family: 'NaN Gothic UI Mono';
+  src: url('../assets/fonts/NaNGothicUIMono-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'NaN Gothic UI Mono';
+  src: url('../assets/fonts/NaNGothicUIMono-ExtraBold.woff2') format('woff2');
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'NaN Gothic UI Mono';
+  src: url('../assets/fonts/NaNGothicUIMono-Black.woff2') format('woff2');
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}
 
 /* Text + labels. */
 @font-face {

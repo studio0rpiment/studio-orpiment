@@ -8,7 +8,12 @@ html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
    Below the slideshow the rest of the page is one tall snap area, so it
    scrolls freely; the footer gives the page a resting point at its end. */
 html:has(.stage) { scroll-snap-type: y mandatory; }
-.after-stage { scroll-snap-align: start; }
+.after-stage {
+  scroll-snap-align: start;
+  /* keep the first section's top margin inside this region's background,
+     rather than letting it collapse through and show paper */
+  display: flow-root;
+}
 html:has(.stage) .site-footer { scroll-snap-align: end; }
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
 body {

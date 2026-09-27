@@ -55,7 +55,7 @@ export default function Stage({ slides }: { slides: Project[] }) {
         ))}
       </div>
 
-      <div className="stage__frame">
+      <div className="stage__frame" data-tone={slides[index]?.tone ?? 'paper'}>
         <div className="stage__panel">
           <h1 className="display stage__name">{site.name}</h1>
 

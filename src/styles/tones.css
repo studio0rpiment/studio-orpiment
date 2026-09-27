@@ -1,0 +1,49 @@
+/*
+ * Tones: a region set to data-tone re-maps the colour tokens inside it, so
+ * everything within (label rows, cards, controls, type) follows without
+ * knowing about tones. Paper is the default and needs no attribute.
+ */
+[data-tone='orpiment'] {
+  --color-bg: hsl(var(--orpiment));
+  --color-ink: hsl(var(--chocolate));
+  --color-ink-soft: hsl(var(--chocolate) / 0.62);
+  --color-rule: hsl(var(--chocolate) / 0.22);
+  --color-block: hsl(var(--chocolate));
+  --color-on-block: hsl(var(--orpiment));
+}
+[data-tone='ink'] {
+  --color-bg: hsl(var(--chocolate));
+  --color-ink: hsl(var(--orpiment));
+  --color-ink-soft: hsl(var(--orpiment) / 0.62);
+  --color-rule: hsl(var(--orpiment) / 0.2);
+  --color-block: hsl(var(--orpiment));
+  --color-on-block: hsl(var(--chocolate));
+}
+
+/* project palette: the Adventurous Electric Guitar documentation site —
+   deep blue ground, brick red type, bands, and lines */
+:root {
+  --aegf-blue: 240 100% 12.4%;
+  --aegf-red: 10.8 75.5% 40.4%;   /* the site's red (L 30.4%), lifted 10 points */
+}
+[data-tone='aegf'] {
+  --color-bg: hsl(var(--aegf-blue));
+  --color-ink: hsl(var(--aegf-red));
+  --color-ink-soft: hsl(var(--aegf-red) / 0.8);
+  --color-rule: hsl(var(--aegf-red) / 0.35);
+  --color-block: hsl(var(--aegf-red));
+  --color-on-block: hsl(var(--aegf-blue));
+}
+
+[data-tone] {
+  background: var(--color-bg);
+  color: var(--color-ink);
+}
+
+/* the fixed Menu / Write squares sit outside the stage, so they are told
+   the stage's palette while a project palette is up */
+:root:has(.stage__frame[data-tone='aegf']) .corner-block {
+  --color-block: hsl(var(--aegf-red));
+  --color-on-block: hsl(var(--aegf-blue));
+}
+.corner-block { transition: background-color 750ms var(--ease-in-out), color 750ms var(--ease-in-out); }

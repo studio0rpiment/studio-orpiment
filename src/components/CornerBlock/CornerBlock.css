@@ -18,4 +18,4 @@
 }
 .corner-block--left { left: 0; }
 .corner-block--right { right: 0; }
-.corner-block:hover { background: var(--color-ink); color: var(--color-orpiment); }
+.corner-block:hover { background: var(--color-on-block); color: var(--color-block); }

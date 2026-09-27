@@ -51,7 +51,7 @@
   background: var(--color-block);
   color: var(--color-on-block);
 }
-.slide-card__more.is-case:hover { background: var(--color-ink); color: var(--color-orpiment); }
+.slide-card__more.is-case:hover { background: var(--color-on-block); color: var(--color-block); }
 
 /* position in the set, drawn along the card's lower edge */
 .slide-card__progress {
@@ -60,8 +60,8 @@
   bottom: 0;
   height: 0.25rem;
   width: calc(var(--p) * 100%);
-  background: var(--color-orpiment);
-  transition: width var(--t-slow) var(--ease-in-out);
+  background: var(--color-block);
+  transition: width var(--t-slow) var(--ease-in-out), background-color 750ms var(--ease-in-out);
 }
 
 @keyframes slide-card-in {

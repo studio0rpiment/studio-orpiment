@@ -6,7 +6,19 @@
 .stage__steps { position: absolute; inset: 0; pointer-events: none; }
 .stage__step { height: 100svh; scroll-snap-align: start; scroll-snap-stop: always; }
 
+/* the stage takes its tone (styles/tones.css) from the photograph that is up */
+/* the change of colour runs with the photograph's reveal */
+.stage__frame,
+.stage__frame :is(.slide-card, .slide-nav, .block-cell, .slide-card__more) {
+  transition:
+    background-color 750ms var(--ease-in-out),
+    color 750ms var(--ease-in-out),
+    border-color 750ms var(--ease-in-out);
+}
+
 .stage__frame {
+  background: var(--color-bg);
+  color: var(--color-ink);
   position: sticky;
   top: 0;
   display: grid;

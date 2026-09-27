@@ -20,8 +20,8 @@
 .work-index__title a { text-decoration: none; }
 .work-index__arrow { font-size: 0.5em; margin-left: 0.5em; vertical-align: 0.6em; color: var(--color-ink-soft); }
 .work-index__tag { margin-left: 1rem; vertical-align: 0.35em; height: 1.5rem; text-transform: uppercase; }
-.work-index__title a:hover .work-index__tag { background: var(--color-ink); color: var(--color-orpiment); }
-.work-index__row:target { background: rgb(238 189 52 / 0.12); }
+.work-index__title a:hover .work-index__tag { background: var(--color-on-block); color: var(--color-block); }
+.work-index__row:target { background: hsl(var(--orpiment) / 0.12); }
 .work-index__title a:hover .work-index__arrow { color: var(--color-orpiment); }
 .work-index__what { grid-column: 7 / span 2; font-size: var(--step--1); }
 .work-index__client { grid-column: 9 / span 3; font-size: var(--step--1); color: var(--color-ink-soft); }

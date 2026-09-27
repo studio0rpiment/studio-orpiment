@@ -67,7 +67,7 @@
 }
 /* the rise: the title's right edge, drawn only when an action follows */
 .block-cell--title:has(+ .block-cell--action) { border-right: var(--line) solid var(--color-block); }
-a.block-cell--action:hover { background: var(--color-ink); color: var(--color-orpiment); }
+a.block-cell--action:hover { background: var(--color-on-block); color: var(--color-block); }
 
 @media (max-width: 40rem) {
   .block-row { max-width: 100vw; }
