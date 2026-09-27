@@ -27,11 +27,15 @@ export function useRoute() {
   return { path, hash }
 }
 
-/** after each route change: go to the #hash if there is one, otherwise to the top */
+/**
+ * After each route change: a #hash is jumped to; anything else (including a
+ * case study, which opens beneath its slide) starts at the top. Jumps, not
+ * glides: gliding past the slideshow's steps would walk it through every slide.
+ */
 export function useScrollOnRoute(path: string, hash: string) {
   useEffect(() => {
     const el = hash ? document.getElementById(hash) : null
-    if (el) el.scrollIntoView()
-    else window.scrollTo(0, 0)
+    if (el) el.scrollIntoView({ behavior: 'instant' })
+    else window.scrollTo({ top: 0, behavior: 'instant' })
   }, [path, hash])
 }

@@ -3,7 +3,7 @@ import Intro from './components/Intro/Intro'
 import CornerBlock from './components/CornerBlock/CornerBlock'
 import MenuOverlay from './components/MenuOverlay/MenuOverlay'
 import Stage from './components/Stage/Stage'
-import CaseStudyPage from './components/CaseStudyPage/CaseStudyPage'
+import CaseStudyPanel from './components/CaseStudyPanel/CaseStudyPanel'
 import WorkIndex from './components/WorkIndex/WorkIndex'
 import Services from './components/Services/Services'
 import Studio from './components/Studio/Studio'
@@ -15,6 +15,7 @@ import { decides } from './content/decides'
 import { projects, slideshow } from './content/projects'
 import { services, site, soundLine, studio } from './content/site'
 import { shuffleAfterFirst } from './lib/shuffle'
+import type { CaseStudy } from './content/types'
 
 const INTRO_SEEN = 'so:intro-seen'
 
@@ -24,7 +25,7 @@ const INTRO_SEEN = 'so:intro-seen'
  */
 const slideOrder = shuffleAfterFirst(slideshow)
 
-/** case studies, in order; each links on to the next */
+/** the in-site case studies, by slug */
 const studies = [wayside, decides]
 
 /** the intro plays once per browser session, and never with reduced motion */
@@ -36,17 +37,27 @@ function introAlreadySeen(): boolean {
   }
 }
 
-function Home() {
+/**
+ * The home page. With a case study open (/work/<slug>) the page is just its
+ * slide, held at the top, and the study beneath it, in the slide's colours;
+ * Exit returns to the slideshow on that slide.
+ */
+function Home({ study }: { study: CaseStudy | null }) {
+  const project = study ? slideOrder.find((p) => p.caseStudy === study.slug) : undefined
   return (
     <main>
-      <Stage slides={slideOrder} />
-      {/* the rest of the page carries on in the colours of the last slide */}
-      <div className="after-stage" data-tone={slideOrder.at(-1)?.tone ?? 'paper'}>
-        <WorkIndex projects={projects} index="01" />
-        <Services services={services} soundLine={soundLine} />
-        <Studio bio={studio.bio} collaborators={studio.collaborators} />
-        <SiteFooter />
-      </div>
+      <Stage slides={slideOrder} hold={project?.id} />
+      {study ? (
+        <CaseStudyPanel study={study} tone={project?.tone} exitHref={project ? `/#slide-${project.id}` : '/'} />
+      ) : (
+        /* the rest of the page carries on in the colours of the last slide */
+        <div className="after-stage" data-tone={slideOrder.at(-1)?.tone ?? 'paper'}>
+          <WorkIndex projects={projects} index="01" />
+          <Services services={services} soundLine={soundLine} />
+          <Studio bio={studio.bio} collaborators={studio.collaborators} />
+          <SiteFooter />
+        </div>
+      )}
     </main>
   )
 }
@@ -70,7 +81,6 @@ export default function App() {
   const slug = path.startsWith('/work/') ? path.slice('/work/'.length).replace(/\/$/, '') : null
   const at = slug ? studies.findIndex((s) => s.slug === slug) : -1
   const study = at >= 0 ? studies[at] : null
-  const next = at >= 0 ? studies[(at + 1) % studies.length] : null
 
   return (
     <>
@@ -91,17 +101,7 @@ export default function App() {
       )}
       <MenuOverlay open={menuOpen} onClose={() => setMenuOpen(false)} />
 
-      {study ? (
-        <CaseStudyPage
-          study={study}
-          index={String(at + 1).padStart(2, '0')}
-          next={next && next !== study ? { slug: next.slug, title: next.title } : undefined}
-        />
-      ) : (
-        <Home />
-      )}
-      {/* the home page closes its toned run with the footer inside it */}
-      {study && <SiteFooter />}
+      <Home study={study} />
     </>
   )
 }

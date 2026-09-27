@@ -15,6 +15,8 @@ type Props = {
   onSettled: () => void
   /** arrow keys step only while the slider is on screen */
   keysActive: boolean
+  /** the current slide's case study is open below */
+  caseOpen?: boolean
 }
 
 /**
@@ -23,7 +25,7 @@ type Props = {
  * previous by a wipe in the direction of travel. The wipe's animationend
  * releases the previous slide. Arrow keys step while the stage is on screen.
  */
-export default function ProjectSlider({ slides, index, previous, direction, onPrev, onNext, onSettled, keysActive }: Props) {
+export default function ProjectSlider({ slides, index, previous, direction, onPrev, onNext, onSettled, keysActive, caseOpen = false }: Props) {
   useKey(['ArrowLeft'], onPrev, keysActive)
   useKey(['ArrowRight'], onNext, keysActive)
 
@@ -51,7 +53,7 @@ export default function ProjectSlider({ slides, index, previous, direction, onPr
         )
       })}
       <div className="project-slider__ui">
-        <SlideCard slide={slides[index]} index={index} count={slides.length} />
+        <SlideCard slide={slides[index]} index={index} count={slides.length} caseOpen={caseOpen} />
         <SlideNav onPrev={onPrev} onNext={onNext} />
       </div>
     </div>

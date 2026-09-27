@@ -1,0 +1,16 @@
+/* the panel is its own toned run: its margins stay inside its colour */
+.case-panel {
+  display: flow-root;
+  scroll-snap-align: start;
+  padding-bottom: clamp(3rem, 2rem + 3vw, 6rem);
+}
+.case-panel .case-study.section { margin-top: calc(var(--corner) + 1.5rem); }
+.case-panel__foot {
+  row-gap: 1.25rem;
+  margin-top: clamp(4rem, 3rem + 4vw, 8rem);
+}
+.case-panel__foot .block-row { grid-column: 1 / -1; }
+
+/* with a study open there is one slide above it: the page scrolls freely,
+   without the slideshow's one-screen-per-step snapping */
+html:has(.case-panel) { scroll-snap-type: none; }

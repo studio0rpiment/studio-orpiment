@@ -2,8 +2,11 @@
 .exhibit__stage {
   position: relative;
   aspect-ratio: 16 / 9;
-  background: var(--color-ink);
-  color: var(--color-bg);
+  max-height: 80svh;
+  width: 100%;
+  /* a quiet well in the palette's ground, like the media frames */
+  background: color-mix(in srgb, var(--color-ink) 8%, var(--color-bg));
+  color: var(--color-ink);
 }
 .exhibit__stage canvas { cursor: grab; }
 .exhibit__stage canvas:active { cursor: grabbing; }
@@ -32,7 +35,7 @@
   position: absolute;
   left: 0; right: 0; bottom: 0;
   height: 0.25rem;
-  background: var(--color-orpiment);
+  background: var(--color-block);
   transform: scaleX(0);
   transform-origin: left;
   transition: transform var(--t-med) var(--ease-in-out);

@@ -8,7 +8,7 @@
   margin-top: clamp(4.5rem, 3rem + 5vw, 9rem);
 }
 .chapter__num { grid-column: 1 / span 1; justify-self: start; align-self: start; margin: calc(-1.25rem - 0.25rem - 1.75rem) 0 0; }
-.chapter__title { grid-column: 2 / span 5; font-size: var(--step-4); letter-spacing: var(--display-tracking); }
+.chapter__title { grid-column: 2 / span 5; font-size: var(--step-2); letter-spacing: var(--display-tracking); }  /* the scale of the slide's label row */
 .chapter__body { grid-column: 8 / span 5; margin: 0; max-width: 52ch; padding-top: 0.5rem; }
 .chapter__media {
   grid-column: 1 / -1;

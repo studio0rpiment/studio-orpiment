@@ -5,18 +5,17 @@ import ChapterRow from '../ChapterRow/ChapterRow'
 import type { CaseStudy as Study } from '../../content/types'
 import './CaseStudy.css'
 
-type Props = { study: Study; index: string }
+type Props = { study: Study; action?: { href: string; label: string } }
 
-export default function CaseStudy({ study, index }: Props) {
+/**
+ * A case study at the scale of the slideshow: the label row carries its
+ * title, the photograph and media stay within the viewport's height.
+ */
+export default function CaseStudy({ study, action }: Props) {
   return (
-    <section className="case-study section" id={study.slug} aria-label={study.title}>
+    <article className="case-study section" aria-label={study.title}>
       <div className="grid">
-        <SectionHead
-          index={index}
-          label={study.kicker}
-          title={study.title}
-          action={study.link ? { href: study.link.href, label: `${study.link.label} ↗` } : undefined}
-        />
+        <SectionHead index={study.kicker} label={study.title} action={action} />
       </div>
 
       {study.cover && (
@@ -36,6 +35,6 @@ export default function CaseStudy({ study, index }: Props) {
           <ChapterRow key={c.id} chapter={c} index={i} />
         ))}
       </div>
-    </section>
+    </article>
   )
 }

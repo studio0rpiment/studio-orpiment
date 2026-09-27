@@ -4,6 +4,7 @@ import ProjectSlider from '../ProjectSlider/ProjectSlider'
 import { useInView } from '../../hooks/useInView'
 import { useSlider } from '../../hooks/useSlider'
 import { useScrollSteps } from '../../hooks/useScrollSteps'
+import { navigate } from '../../hooks/useRoute'
 import { site } from '../../content/site'
 import type { Project } from '../../content/types'
 import './Stage.css'
@@ -14,23 +15,41 @@ import './Stage.css'
  * its photograph in on the right; after the last project the page carries
  * on to the work index. Prev/next (and the arrow keys) scroll to a step,
  * so buttons and scrolling are the same motion.
+ *
+ * With a case study open, the stage holds that one project: a single screen,
+ * the slideshow paused on it, and the study scrolling in underneath. Prev/next
+ * then leave the study for the neighbouring slide.
  */
-export default function Stage({ slides }: { slides: Project[] }) {
+export default function Stage({ slides, hold }: { slides: Project[]; hold?: string }) {
   const ref = useRef<HTMLElement>(null)
   const onScreen = useInView(ref, { threshold: 0.1 })
-  const step = useScrollSteps(ref, '.stage__step')
-  const { index, previous, direction, go, settle } = useSlider(slides.length)
+  const held = hold ? slides.findIndex((s) => s.id === hold) : -1
+  const holding = held >= 0
+  const steps = holding ? [slides[held]] : slides
+  const step = useScrollSteps(ref, '.stage__step', steps.map((s) => s.id).join())
+  const slider = useSlider(slides.length)
+  const { go, settle } = slider
+  // while holding, the held project is shown as is, with no reveal in progress
+  const index = holding ? held : slider.index
+  const previous = holding ? null : slider.previous
+  const direction = slider.direction
   const pad = (n: number) => String(n).padStart(2, '0')
 
   // scroll position → slide. The slideshow walks toward the scrolled-to step
   // one project at a time; each move waits for the previous reveal's
   // animationend (previous === null), so no image is cut off mid-reveal.
   useEffect(() => {
-    if (previous !== null || step === index) return
+    if (holding || previous !== null || step === index) return
     go(index + Math.sign(step - index))
-  }, [step, index, previous, go])
+  }, [holding, step, index, previous, go])
 
   const scrollToStep = useCallback((i: number) => {
+    if (holding) {
+      // leave the study for the neighbouring slide
+      const to = slides[Math.min(Math.max(i, 0), slides.length - 1)]
+      navigate(`/#slide-${to.id}`)
+      return
+    }
     const root = ref.current
     if (!root) return
     if (i >= slides.length) {
@@ -39,7 +58,7 @@ export default function Stage({ slides }: { slides: Project[] }) {
     }
     const el = root.querySelector<HTMLElement>(`[data-step="${Math.max(0, i)}"]`)
     el?.scrollIntoView({ behavior: 'smooth', block: 'start' })
-  }, [slides.length])
+  }, [holding, slides])
 
   return (
     <section
@@ -47,12 +66,13 @@ export default function Stage({ slides }: { slides: Project[] }) {
       id="top"
       ref={ref}
       aria-label="Studio Orpiment"
-      style={{ '--steps': slides.length } as CSSProperties}
+      style={{ '--steps': steps.length } as CSSProperties}
     >
       <div className="stage__steps" aria-hidden="true">
-        {slides.map((s, i) => (
-          <div className="stage__step" data-step={i} key={s.id} />
-        ))}
+        {steps.map((s) => {
+          const i = slides.indexOf(s)
+          return <div className="stage__step" data-step={i} id={`slide-${s.id}`} key={s.id} />
+        })}
       </div>
 
       <div className="stage__frame" data-tone={slides[index]?.tone ?? 'paper'}>
@@ -65,7 +85,7 @@ export default function Stage({ slides }: { slides: Project[] }) {
               <span className="block-cell__of">{pad(slides.length)}</span>
             </BlockCell>
             <BlockCell kind="title" as="p">Projects</BlockCell>
-            <BlockCell kind="action" href="#work">All projects</BlockCell>
+            <BlockCell kind="action" href="/#work">All projects</BlockCell>
           </BlockRow>
 
           <div className="stage__foot">
@@ -87,6 +107,7 @@ export default function Stage({ slides }: { slides: Project[] }) {
           onNext={() => scrollToStep(index + 1)}
           onSettled={settle}
           keysActive={onScreen}
+          caseOpen={holding}
         />
       </div>
     </section>

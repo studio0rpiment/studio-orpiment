@@ -5,7 +5,7 @@ import { RefObject, useEffect, useState } from 'react'
  * viewport. IntersectionObserver reports each crossing; nothing runs while
  * the page is still.
  */
-export function useScrollSteps(container: RefObject<HTMLElement>, selector: string): number {
+export function useScrollSteps(container: RefObject<HTMLElement>, selector: string, stepsKey = ''): number {
   const [active, setActive] = useState(0)
   useEffect(() => {
     const root = container.current
@@ -21,6 +21,6 @@ export function useScrollSteps(container: RefObject<HTMLElement>, selector: stri
     )
     steps.forEach((s) => io.observe(s))
     return () => io.disconnect()
-  }, [container, selector])
+  }, [container, selector, stepsKey]) // re-observe when the set of steps changes
   return active
 }
