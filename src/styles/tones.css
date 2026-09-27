@@ -95,16 +95,16 @@
   --color-on-block: hsl(var(--wmv-charcoal));
 }
 
-/* project palette: Wayside — the chocolate ground, with the red of the lotus stems for type, bands, and lines */
+/* project palette: Wayside — the chocolate ground, with the grasshopper green of the point-cloud grass for type, bands, and lines */
 :root {
-  --wayside-red: 11.1 60.4% 48.6%;   /* the stem red (L 38.6%), lifted 10 points */
+  --wayside-green: 74.8 40.4% 43.5%;   /* grasshopper green from the point-cloud grass (L 33.5%), lifted 10 points */
 }
 [data-tone='wayside'] {
   --color-bg: hsl(var(--chocolate));
-  --color-ink: hsl(var(--wayside-red));
-  --color-ink-soft: hsl(var(--wayside-red) / 0.8);
-  --color-rule: hsl(var(--wayside-red) / 0.3);
-  --color-block: hsl(var(--wayside-red));
+  --color-ink: hsl(var(--wayside-green));
+  --color-ink-soft: hsl(var(--wayside-green) / 0.8);
+  --color-rule: hsl(var(--wayside-green) / 0.3);
+  --color-block: hsl(var(--wayside-green));
   --color-on-block: hsl(var(--chocolate));
 }
 
