@@ -29,7 +29,14 @@ const studies = [wayside, decides]
  * slide, held at the top, and the study beneath it, in the slide's colours;
  * Exit returns to the slideshow on that slide.
  */
-function Home({ study, onTone }: { study: CaseStudy | null; onTone: (tone: Tone) => void }) {
+type HomeProps = {
+  study: CaseStudy | null
+  /** the palette on screen: the sections below the slideshow wear it too */
+  tone: Tone
+  onTone: (tone: Tone) => void
+}
+
+function Home({ study, tone, onTone }: HomeProps) {
   const project = study ? slideOrder.find((p) => p.caseStudy === study.slug) : undefined
   return (
     <main>
@@ -37,8 +44,9 @@ function Home({ study, onTone }: { study: CaseStudy | null; onTone: (tone: Tone)
       {study ? (
         <CaseStudyPanel study={study} tone={project?.tone} exitHref={project ? `/#slide-${project.id}` : '/'} />
       ) : (
-        /* the rest of the page carries on in the colours of the last slide */
-        <div className="after-stage" data-tone={slideOrder.at(-1)?.tone ?? 'paper'}>
+        /* the rest of the page wears the palette on screen: the last slide's when
+           scrolled into, the current slide's (as in the menu) when jumped to */
+        <div className="after-stage" data-tone={tone}>
           <WorkIndex projects={projects} index="01" />
           <Services services={services} soundLine={soundLine} />
           <Studio bio={studio.bio} collaborators={studio.collaborators} />
@@ -77,7 +85,7 @@ export default function App() {
         <MenuOverlay open={menuOpen} onClose={() => setMenuOpen(false)} />
       </div>
 
-      <Home study={study} onTone={setScreenTone} />
+      <Home study={study} tone={screenTone} onTone={setScreenTone} />
     </>
   )
 }

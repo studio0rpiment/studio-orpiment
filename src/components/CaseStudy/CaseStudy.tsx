@@ -1,6 +1,5 @@
 import SectionHead from '../SectionHead/SectionHead'
 import Facts from '../Facts/Facts'
-import ExhibitFrame from '../ExhibitFrame/ExhibitFrame'
 import ChapterRow from '../ChapterRow/ChapterRow'
 import type { CaseStudy as Study } from '../../content/types'
 import './CaseStudy.css'
@@ -30,7 +29,6 @@ export default function CaseStudy({ study, action }: Props) {
         <div className="case-study__facts">
           <Facts facts={study.facts} />
         </div>
-        {study.exhibit && <ExhibitFrame forms={study.exhibit.forms} caption={study.exhibit.caption} />}
         {study.chapters.map((c, i) => (
           <ChapterRow key={c.id} chapter={c} index={i} />
         ))}

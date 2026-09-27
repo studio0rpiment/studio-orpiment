@@ -7,15 +7,40 @@ export type MediaItem = {
   kind: 'image' | 'video'
   src: string
   caption?: string
-  /** portrait phone captures get narrower columns */
+  /** portrait phone captures get narrower columns (and a phone-shaped frame) */
   portrait?: boolean
+  /** columns of the twelve it spans on wide screens (defaults: portrait 3, landscape 6) */
+  span?: number
+  /** a still shown before a video plays */
+  poster?: string
 }
+
+/** one experience in the dossier's concept / requirements / solution tables */
+export type Experience = {
+  name: string
+  concept?: string
+  requirements?: string
+  /** the solution, shown: usually a screen capture */
+  solution: MediaItem
+}
+
+/**
+ * A chapter is a run of blocks, so a study can follow its own breakdown:
+ * paragraphs (with an optional run-in heading), rows of media, experience
+ * tables, or the interactive point-cloud exhibit.
+ */
+export type Block =
+  | { kind: 'text'; heading?: string; text: string; link?: { href: string; label: string } }
+  | { kind: 'media'; items: MediaItem[] }
+  | { kind: 'experiences'; items: Experience[] }
+  | { kind: 'exhibit'; caption: string; forms: CloudForm[] }
 
 export type Chapter = {
   id: string
   title: string
-  body: string
-  media: MediaItem[]
+  /** a line beside the title */
+  lead?: string
+  blocks: Block[]
 }
 
 export type Fact = { label: string; value: string }
@@ -75,7 +100,6 @@ export type CaseStudy = {
   /** full-bleed photograph opening the case study */
   cover?: MediaItem
   chapters: Chapter[]
-  exhibit?: { caption: string; forms: CloudForm[] }
 }
 
 export type Service = { title: string; body: string }

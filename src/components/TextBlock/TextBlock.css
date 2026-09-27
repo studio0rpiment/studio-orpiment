@@ -1,0 +1,20 @@
+.text-block { grid-column: 2 / span 7; }
+.text-block__text { margin: 0; max-width: 64ch; line-height: 1.6; }
+/* the run-in heading, as in the dossier: set in the block colour, then the text runs on */
+.text-block__heading {
+  display: block;
+  margin-bottom: 0.35rem;
+  font-weight: inherit;
+  font-size: var(--step--2);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-block);
+}
+.text-block__link {
+  display: inline-block;
+  margin-top: 0.75rem;
+  font-size: var(--step--2);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+@media (max-width: 60rem) { .text-block { grid-column: 1 / -1; } }
