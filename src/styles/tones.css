@@ -95,8 +95,52 @@
   --color-on-block: hsl(var(--wmv-charcoal));
 }
 
+/* project palette: Wayside — the chocolate ground, with the red of the lotus stems for type, bands, and lines */
+:root {
+  --wayside-red: 11.1 60.4% 48.6%;   /* the stem red (L 38.6%), lifted 10 points */
+}
+[data-tone='wayside'] {
+  --color-bg: hsl(var(--chocolate));
+  --color-ink: hsl(var(--wayside-red));
+  --color-ink-soft: hsl(var(--wayside-red) / 0.8);
+  --color-rule: hsl(var(--wayside-red) / 0.3);
+  --color-block: hsl(var(--wayside-red));
+  --color-on-block: hsl(var(--chocolate));
+}
+
+/* project palette: DECIDE(S) — an ochre ground; the app's cream for type, bands, and lines */
+:root {
+  --decides-ochre: 21.3 47.3% 43.1%;
+  --decides-cream: 48 55.6% 94.7%;
+}
+[data-tone='decides'] {
+  --color-bg: hsl(var(--decides-ochre));
+  --color-ink: hsl(var(--decides-cream));
+  --color-ink-soft: hsl(var(--decides-cream) / 0.8);
+  --color-rule: hsl(var(--decides-cream) / 0.3);
+  --color-block: hsl(var(--decides-cream));
+  --color-on-block: hsl(var(--decides-ochre));
+}
+
+/* project palette: Three Black Wall Streets — the postcards' paper as the ground, chocolate for type, bands, and lines */
+:root {
+  --tbws-paper: 66.9 1.3% 72.8%;
+  --tbws-texture: url('/textures/three-black-wall-streets.jpg');
+}
+[data-tone='tbws'] {
+  --color-bg: hsl(var(--tbws-paper));
+  --tone-ground: var(--tbws-texture);
+  --tone-ground-size: auto;    /* the paper at its own grain; the tile seams are left showing on purpose */
+  --color-ink: hsl(var(--chocolate));
+  --color-ink-soft: hsl(var(--chocolate) / 0.75);
+  --color-rule: hsl(var(--chocolate) / 0.25);
+  --color-block: hsl(var(--chocolate));
+  --color-on-block: hsl(var(--tbws-paper));
+}
+
 [data-tone] {
-  background: var(--color-bg);
+  /* a palette may lay a texture (--tone-ground) over its ground colour */
+  background: var(--tone-ground, none) center / var(--tone-ground-size, auto) fixed var(--color-bg);
   color: var(--color-ink);
 }
 
@@ -118,6 +162,18 @@
 :root:has(.stage__frame[data-tone='wmv']) .corner-block {
   --color-block: hsl(var(--wmv-red));
   --color-on-block: hsl(var(--wmv-charcoal));
+}
+:root:has(.stage__frame[data-tone='wayside']) .corner-block {
+  --color-block: hsl(var(--wayside-red));
+  --color-on-block: hsl(var(--chocolate));
+}
+:root:has(.stage__frame[data-tone='decides']) .corner-block {
+  --color-block: hsl(var(--decides-cream));
+  --color-on-block: hsl(var(--decides-ochre));
+}
+:root:has(.stage__frame[data-tone='tbws']) .corner-block {
+  --color-block: hsl(var(--chocolate));
+  --color-on-block: hsl(var(--tbws-paper));
 }
 :root:has(.stage__frame[data-tone='ulrike']) .corner-block {
   --color-block: hsl(var(--ulrike-charcoal));

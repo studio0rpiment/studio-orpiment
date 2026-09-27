@@ -1,6 +1,6 @@
 .slide-nav {
   display: flex;
-  background: var(--color-bg);
+  background: var(--tone-ground, none) center / var(--tone-ground-size, auto) fixed var(--color-bg);
   border-left: 1px solid var(--color-rule);
 }
 .slide-nav__btn {

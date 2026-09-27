@@ -14,8 +14,15 @@ import { wayside } from './content/wayside'
 import { decides } from './content/decides'
 import { projects, slideshow } from './content/projects'
 import { services, site, soundLine, studio } from './content/site'
+import { shuffleAfterFirst } from './lib/shuffle'
 
 const INTRO_SEEN = 'so:intro-seen'
+
+/**
+ * The dice are rolled once per page load: Wayside always opens, the rest
+ * of the slideshow (and so the run of colours) comes in a new order.
+ */
+const slideOrder = shuffleAfterFirst(slideshow)
 
 /** case studies, in order; each links on to the next */
 const studies = [wayside, decides]
@@ -32,11 +39,13 @@ function introAlreadySeen(): boolean {
 function Home() {
   return (
     <main>
-      <Stage slides={slideshow} />
-      <div className="after-stage" data-tone="ink">
+      <Stage slides={slideOrder} />
+      {/* the rest of the page carries on in the colours of the last slide */}
+      <div className="after-stage" data-tone={slideOrder.at(-1)?.tone ?? 'paper'}>
         <WorkIndex projects={projects} index="01" />
         <Services services={services} soundLine={soundLine} />
         <Studio bio={studio.bio} collaborators={studio.collaborators} />
+        <SiteFooter />
       </div>
     </main>
   )
@@ -91,7 +100,8 @@ export default function App() {
       ) : (
         <Home />
       )}
-      <SiteFooter />
+      {/* the home page closes its toned run with the footer inside it */}
+      {study && <SiteFooter />}
     </>
   )
 }

@@ -5,7 +5,7 @@
   /* a steady minimum so the card mostly holds still while its text changes;
      it grows only when a title and its lines need more room */
   min-height: clamp(10.5rem, 8rem + 5vw, 13.5rem);
-  background: var(--color-bg);
+  background: var(--tone-ground, none) center / var(--tone-ground-size, auto) fixed var(--color-bg);
   color: var(--color-ink);
   padding: 1rem 1.5rem 3rem;
 }
@@ -17,6 +17,8 @@
   animation: slide-card-in var(--t-med) var(--ease-out) both;
 }
 .slide-card__num {
+  /* a palette may set the number apart from the rest of the type */
+  color: var(--color-number, inherit);
   font-size: var(--step-3);
   letter-spacing: var(--display-tracking);
   justify-self: end;

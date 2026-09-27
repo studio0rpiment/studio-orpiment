@@ -10,10 +10,11 @@
 .site-footer__email {
   display: inline-block;
   margin-top: 0.75rem;
-  font-size: var(--step-3);
+  /* sized to the column so the mono address stays on one line */
+  font-size: min(var(--step-3), 3.6vw);
   letter-spacing: var(--display-tracking);
   text-decoration: none;
-  word-break: break-word;
+  white-space: nowrap;
 }
 .site-footer__email:hover { color: var(--color-bg); }
 .site-footer__meta {
@@ -33,4 +34,18 @@
 .site-footer__meta a:hover { color: var(--color-bg); }
 @media (max-width: 50rem) {
   .site-footer__logo, .site-footer__contact { grid-column: 1 / -1; }
+  .site-footer__email { font-size: min(var(--step-3), 7vw); }
 }
+
+/* inside a toned run (the home page after the slideshow) the footer takes
+   the page's ground instead of a solid block, so the page ends in one colour */
+[data-tone] .site-footer {
+  background: transparent;
+  color: var(--color-ink);
+  border-top: 1px solid var(--color-rule);
+}
+[data-tone] .site-footer__label,
+[data-tone] .site-footer__meta { color: var(--color-ink-soft); }
+[data-tone] .site-footer__meta { border-top-color: var(--color-rule); }
+[data-tone] .site-footer__email:hover,
+[data-tone] .site-footer__meta a:hover { color: var(--color-ink-soft); }

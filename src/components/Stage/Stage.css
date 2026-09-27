@@ -17,7 +17,7 @@
 }
 
 .stage__frame {
-  background: var(--color-bg);
+  background: var(--tone-ground, none) center / var(--tone-ground-size, auto) fixed var(--color-bg);
   color: var(--color-ink);
   position: sticky;
   top: 0;
