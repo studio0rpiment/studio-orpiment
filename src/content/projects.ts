@@ -143,5 +143,12 @@ export const projects: Project[] = [
   },
 ]
 
+/**
+ * A project's number is its place in this list, whatever order the
+ * slideshow is shuffled into: DECIDE(S) is always N°002. The work index
+ * counts the same way.
+ */
+export const numberOf = (id: string) => projects.findIndex((p) => p.id === id) + 1
+
 /** projects with an image, in slideshow order */
 export const slideshow = projects.filter((p) => p.image)

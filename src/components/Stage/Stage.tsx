@@ -6,6 +6,7 @@ import { useSlider } from '../../hooks/useSlider'
 import { useScrollSteps } from '../../hooks/useScrollSteps'
 import { navigate } from '../../hooks/useRoute'
 import { site } from '../../content/site'
+import { numberOf } from '../../content/projects'
 import type { Project, Tone } from '../../content/types'
 import './Stage.css'
 
@@ -100,7 +101,7 @@ export default function Stage({ slides, hold, onTone }: Props) {
 
           <BlockRow className="stage__blocks">
             <BlockCell kind="index">
-              <span>{pad(index + 1)}</span>
+              <span>{pad(shown ? numberOf(shown.id) : index + 1)}</span>
               <span className="block-cell__of">{pad(slides.length)}</span>
             </BlockCell>
             <BlockCell kind="title" as="p">Projects</BlockCell>

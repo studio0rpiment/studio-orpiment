@@ -1,6 +1,7 @@
 import { CSSProperties } from 'react'
 import RouteLink from '../RouteLink/RouteLink'
 import type { Project } from '../../content/types'
+import { numberOf } from '../../content/projects'
 import './SlideCard.css'
 
 type Props = { slide: Project; index: number; count: number; caseOpen?: boolean }
@@ -22,7 +23,7 @@ export default function SlideCard({ slide, index, count, caseOpen = false }: Pro
   return (
     <div className="slide-card" aria-live="polite">
       <div className="slide-card__body" key={slide.id}>
-        <p className="display slide-card__num tone-text">N°{String(index + 1).padStart(3, '0')}</p>
+        <p className="display slide-card__num tone-text">N°{String(numberOf(slide.id)).padStart(3, '0')}</p>
         <div className="slide-card__title tone-text">
           <h2 className="display">{slide.title}</h2>
           {slide.lines.map((l) => (
